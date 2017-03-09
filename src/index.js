@@ -1,3 +1,4 @@
+import R from 'ramda';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import firebase from 'firebase'
@@ -29,17 +30,20 @@ const PredictionForm = (props) => (
   </form>
 )
 
+const renderPredictions = R.compose(
+  R.map(
+    ([i, {title, prob, correct}]) =>
+      <li key={i}>{title} {prob} {correct ? 'correct' : 'incorrect'}</li>
+  ),
+  R.toPairs
+)
+
 const PredictionsList = ({ predictions }) => {
-  return (
+  return predictions !== null ? (
     <ul>
-      {Object.keys(predictions).map(i => {
-        return (
-          <li key={i}>{predictions[i].title} {predictions[i].prob} {predictions[i].correct ? 'correct' : 'incorrect'}</li>
-        )
-      }
-      )}
+      {renderPredictions(predictions)}
     </ul>
-  )
+  ) : <div>Loading...</div>
 }
 
 class App extends React.Component {
@@ -48,7 +52,7 @@ class App extends React.Component {
     this.state = {
       auth: false,
       currentPrediction: {},
-      predictions: []
+      predictions: null
     }
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -106,10 +110,10 @@ class App extends React.Component {
       this.state.auth ?
         <div>
           <LogOutButton logout={this.logout} />
-          <PredictionsList predictions={this.state.predictions} />
           <PredictionForm handleInputChange={this.handleInputChange}
             handleSubmit={this.handleSubmit}
             currentPrediction={this.state.currentPrediction} />
+          <PredictionsList predictions={this.state.predictions} />
         </div> :
         <LoginButton login={this.login} />
     )
