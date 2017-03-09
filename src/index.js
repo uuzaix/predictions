@@ -16,11 +16,25 @@ const PredictionForm = (props) => (
   <form onSubmit={props.handleSubmit}>
     <label>
       Title:
-    <input type='text' name="title" onChange={props.handleInputChange} value={props.currentPrediction.title} />
+    <input type='text'
+        name="title"
+        onChange={props.handleInputChange}
+        value={props.currentPrediction.title}
+        placeholder="It will rain tomorrow"
+        required />
     </label>
     <label>
-      %
-    <input type='text' name="prob" onChange={props.handleInputChange} value={props.currentPrediction.prob} />
+      Probability
+      <select name="prob" onChange={props.handleInputChange} value={props.currentPrediction.prob}>
+        <option value="50">50%</option>
+        <option value="60">60%</option>
+        <option value="70">70%</option>
+        <option value="80">80%</option>
+        <option value="90">90%</option>
+        <option value="95">95%</option>
+        <option value="97">97%</option>
+        <option value="99">99%</option>
+      </select>
     </label>
     <label>
       Correct?
@@ -32,7 +46,7 @@ const PredictionForm = (props) => (
 
 const renderPredictions = R.compose(
   R.map(
-    ([i, {title, prob, correct}]) =>
+    ([i, { title, prob, correct }]) =>
       <li key={i}>{title} {prob} {correct ? 'correct' : 'incorrect'}</li>
   ),
   R.toPairs
@@ -44,6 +58,35 @@ const PredictionsList = ({ predictions }) => {
       {renderPredictions(predictions)}
     </ul>
   ) : <div>Loading...</div>
+}
+
+const calcStat = R.compose(
+  R.map(
+    ([prob, data]) => {
+      console.log(prob, R.sum(data) / data.length);
+      return (
+        <p key={prob}>{prob + ' - ' + (R.sum(data) / data.length * 100) + '%'}</p>
+      )
+    }
+  ), R.toPairs)
+
+
+const Statistics = ({ predictions }) => {
+  let stat = {}
+  R.compose(
+    R.forEach(
+      ([i, { title, prob, correct }]) => {
+        if (stat.hasOwnProperty(prob)) {
+          stat[prob] = correct ? [...stat[prob], 1] : [...stat[prob], 0]
+        } else {
+          stat[prob] = correct ? [1] : [0]
+        }
+      }
+    ),
+    R.toPairs)(predictions)
+  return (
+    <div>{calcStat(stat)}</div>
+  )
 }
 
 class App extends React.Component {
@@ -114,6 +157,7 @@ class App extends React.Component {
             handleSubmit={this.handleSubmit}
             currentPrediction={this.state.currentPrediction} />
           <PredictionsList predictions={this.state.predictions} />
+          <Statistics predictions={this.state.predictions} />
         </div> :
         <LoginButton login={this.login} />
     )
