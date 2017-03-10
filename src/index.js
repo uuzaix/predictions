@@ -2,10 +2,10 @@ import R from 'ramda';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import firebase from 'firebase'
-import { firebaseApp, firebaseAuth, database } from './firebase';
+import { firebaseApp, firebaseAuth, database, providerGithub, providerGoogle } from './firebase';
 
-const LoginButton = ({ login }) => (
-  <button onClick={() => login()}>Login with GitHub</button>
+const LoginButton = ({ login, provider, providerName }) => (
+  <button onClick={() => login(provider)}>Login with {providerName}</button>
 )
 
 const LogOutButton = ({ logout }) => (
@@ -44,18 +44,20 @@ const PredictionForm = (props) => (
   </form>
 )
 
-const renderPredictions = R.compose(
+const renderPredictions = handleDelete => R.compose(
   R.map(
     ([i, { title, prob, correct }]) =>
-      <li key={i}>{title} {prob} {correct ? 'correct' : 'incorrect'}</li>
+      <li key={i}>{title} {prob} {correct ? 'correct' : 'incorrect'}
+        <button onClick={() => handleDelete(i)}>delete</button>
+      </li>
   ),
   R.toPairs
 )
 
-const PredictionsList = ({ predictions }) => {
+const PredictionsList = ({ predictions, handleDelete }) => {
   return predictions !== null ? (
     <ul>
-      {renderPredictions(predictions)}
+      {renderPredictions(handleDelete)(predictions)}
     </ul>
   ) : <div>Loading...</div>
 }
@@ -143,8 +145,12 @@ class App extends React.Component {
     this.setState({ currentPrediction: { title: '', prob: '50', correct: false } })
   }
 
-  login() {
-    const provider = new firebase.auth.GithubAuthProvider();
+  handleDelete(key) {
+    const path = 'users/' + firebaseAuth.currentUser.uid + '/predictions/' + key;
+    database.ref().child(path).remove();
+  }
+
+  login(provider) {
     firebaseAuth.signInWithPopup(provider).then(result => {
       const user = result.user;
     }).catch(function (error) {
@@ -168,10 +174,13 @@ class App extends React.Component {
           <PredictionForm handleInputChange={this.handleInputChange}
             handleSubmit={this.handleSubmit}
             currentPrediction={this.state.currentPrediction} />
-          <PredictionsList predictions={this.state.predictions} />
+          <PredictionsList predictions={this.state.predictions} handleDelete={this.handleDelete} />
           <Statistics predictions={this.state.predictions} />
         </div> :
-        <LoginButton login={this.login} />
+        <div>
+          <LoginButton login={this.login} provider={providerGithub} providerName='Github' />
+          <LoginButton login={this.login} provider={providerGoogle} providerName='Google' />
+        </div>
     )
   }
 }
