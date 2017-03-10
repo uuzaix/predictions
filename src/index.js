@@ -38,18 +38,33 @@ const PredictionForm = (props) => (
     </label>
     <label>
       Correct?
-    <input type='checkbox' name="correct" onChange={props.handleInputChange} checked={props.currentPrediction.correct} />
+    <select type='checkbox' name="correct" onChange={props.handleInputChange} value={props.currentPrediction.correct}>
+        <option value="uknown">Uknown</option>
+        <option value="correct">Correct</option>
+        <option value="incorrect">Incorrect</option>
+      </select>
     </label>
     <input type='submit' value='Submit' />
-  </form>
+  </form >
 )
 
 const renderPredictions = handleDelete => R.compose(
   R.map(
     ([i, { title, prob, correct }]) =>
-      <li key={i}>{title} {prob} {correct ? 'correct' : 'incorrect'}
+      <li key={i}>{title} {prob} {correct}
         <button onClick={() => handleDelete(i)}>delete</button>
       </li>
+  ),
+  R.sort(
+    (a, b) => {
+      if (a[1].correct === 'unknown' && b[1].correct !== 'unknown') {
+        return -1
+      } else if (a[1].correct !== 'unknown' && b[1].correct === 'unknown') {
+        return 1
+      } else {
+        return 0
+      }
+    }
   ),
   R.toPairs
 )
@@ -75,12 +90,17 @@ const calcStat = R.compose(
     }
   ), R.toPairs)
 
-const reduceToCorrectBy = R.reduceBy((acc, pred) => acc.concat(pred[1].correct ? 1 : 0), []);
+const reduceToCorrectBy = R.reduceBy((acc, pred) => acc.concat(pred[1].correct === 'correct' ? 1 : 0), []);
 
 const groupByProb = R.compose(
   reduceToCorrectBy(
     ([i, { title, prob, correct }]) => {
       return prob
+    }
+  ),
+  R.filter(
+    ([i, { title, prob, correct }]) => {
+      return correct !== 'unknown'
     }
   ),
   R.toPairs)
@@ -107,7 +127,7 @@ class App extends React.Component {
     this.state = {
       auth: false,
       currentPrediction: {
-        title: '', prob: '50', correct: false
+        title: '', prob: '50', correct: 'unknown'
       },
       predictions: null
     }
@@ -142,7 +162,7 @@ class App extends React.Component {
     const path = 'users/' + firebaseAuth.currentUser.uid + '/predictions';
     const newPredKey = database.ref().child(path).push().key;
     database.ref().update({ [path + '/' + newPredKey]: this.state.currentPrediction });
-    this.setState({ currentPrediction: { title: '', prob: '50', correct: false } })
+    this.setState({ currentPrediction: { title: '', prob: '50', correct: 'unknown' } })
   }
 
   handleDelete(key) {
