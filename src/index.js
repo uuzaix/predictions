@@ -63,29 +63,39 @@ const PredictionsList = ({ predictions }) => {
 const calcStat = R.compose(
   R.map(
     ([prob, data]) => {
-      console.log(prob, R.sum(data) / data.length);
+      console.log(prob, data);
       return (
-        <p key={prob}>{prob + ' - ' + (R.sum(data) / data.length * 100) + '%'}</p>
+        <tr key={prob}>
+          <td>{prob}</td>
+          <td>{R.sum(data) / data.length * 100}</td>
+        </tr>
       )
     }
   ), R.toPairs)
 
+const reduceToCorrectBy = R.reduceBy((acc, pred) => acc.concat(pred[1].correct ? 1 : 0), []);
+
+const groupByProb = R.compose(
+  reduceToCorrectBy(
+    ([i, { title, prob, correct }]) => {
+      return prob
+    }
+  ),
+  R.toPairs)
 
 const Statistics = ({ predictions }) => {
-  let stat = {}
-  R.compose(
-    R.forEach(
-      ([i, { title, prob, correct }]) => {
-        if (stat.hasOwnProperty(prob)) {
-          stat[prob] = correct ? [...stat[prob], 1] : [...stat[prob], 0]
-        } else {
-          stat[prob] = correct ? [1] : [0]
-        }
-      }
-    ),
-    R.toPairs)(predictions)
   return (
-    <div>{calcStat(stat)}</div>
+    <table>
+      <thead>
+        <tr>
+          <td>Probability</td>
+          <td>Correctness</td>
+        </tr>
+      </thead>
+      <tbody>
+        {calcStat(groupByProb(predictions))}
+      </tbody>
+    </table>
   )
 }
 
@@ -94,7 +104,9 @@ class App extends React.Component {
     super(props)
     this.state = {
       auth: false,
-      currentPrediction: {},
+      currentPrediction: {
+        title: '', prob: '50', correct: false
+      },
       predictions: null
     }
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -128,7 +140,7 @@ class App extends React.Component {
     const path = 'users/' + firebaseAuth.currentUser.uid + '/predictions';
     const newPredKey = database.ref().child(path).push().key;
     database.ref().update({ [path + '/' + newPredKey]: this.state.currentPrediction });
-    this.setState({ currentPrediction: { title: '', prob: '', correct: false } })
+    this.setState({ currentPrediction: { title: '', prob: '50', correct: false } })
   }
 
   login() {
