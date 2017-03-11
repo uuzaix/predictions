@@ -48,31 +48,22 @@ const PredictionForm = (props) => (
   </form >
 )
 
-const renderPredictions = handleDelete => R.compose(
+const renderPredictions = (handleDelete, filter) => R.compose(
   R.map(
     ([i, { title, prob, correct }]) =>
       <li key={i}>{title} {prob} {correct}
         <button onClick={() => handleDelete(i)}>delete</button>
       </li>
   ),
-  R.sort(
-    (a, b) => {
-      if (a[1].correct === 'unknown' && b[1].correct !== 'unknown') {
-        return -1
-      } else if (a[1].correct !== 'unknown' && b[1].correct === 'unknown') {
-        return 1
-      } else {
-        return 0
-      }
-    }
-  ),
-  R.toPairs
+  R.toPairs,
+  R.filter(filter)
 )
 
 const PredictionsList = ({ predictions, handleDelete }) => {
   return predictions !== null ? (
     <ul>
-      {renderPredictions(handleDelete)(predictions)}
+      {renderPredictions(handleDelete, R.propEq('correct', 'unknown'))(predictions)}
+      {renderPredictions(handleDelete, R.propSatisfies(a => a !== 'unknown', 'correct'))(predictions)}
     </ul>
   ) : <div>Loading...</div>
 }
@@ -80,30 +71,25 @@ const PredictionsList = ({ predictions, handleDelete }) => {
 const calcStat = R.compose(
   R.map(
     ([prob, data]) => {
-      console.log(prob, data);
       return (
         <tr key={prob}>
           <td>{prob}</td>
-          <td>{R.sum(data) / data.length * 100}</td>
+          <td>{data}</td>
         </tr>
       )
     }
   ), R.toPairs)
 
-const reduceToCorrectBy = R.reduceBy((acc, pred) => acc.concat(pred[1].correct === 'correct' ? 1 : 0), []);
-
 const groupByProb = R.compose(
-  reduceToCorrectBy(
-    ([i, { title, prob, correct }]) => {
-      return prob
-    }
+  R.map(
+    R.compose(
+      data => R.sum(data) / data.length * 100,
+      R.map(({ correct }) => correct === 'correct' ? 1 : 0)
+    )
   ),
-  R.filter(
-    ([i, { title, prob, correct }]) => {
-      return correct !== 'unknown'
-    }
-  ),
-  R.toPairs)
+  R.groupBy(({ prob }) => prob),
+  R.filter(({ correct }) => correct !== 'unknown'),
+  R.values)
 
 const Statistics = ({ predictions }) => {
   return (
