@@ -48,22 +48,42 @@ const PredictionForm = (props) => (
   </form >
 )
 
-const renderPredictions = (handleDelete, filter) => R.compose(
+const Prediction = (props) => (
+  <li key={props.id} onClick={() => props.handleEdit(props.id)}>
+    {props.title} {props.prob} {props.correct}
+    <button onClick={() => props.handleDelete(props.id)}>delete</button>
+  </li>
+)
+
+const renderPredictions = (props, filter) => R.compose(
   R.map(
     ([i, { title, prob, correct }]) =>
-      <li key={i}>{title} {prob} {correct}
-        <button onClick={() => handleDelete(i)}>delete</button>
-      </li>
+      props.editing === i ?
+        <PredictionForm
+          key={i}
+          handleInputChange={props.handleUpdate}
+          handleSubmit={props.handleUpdateSubmit}
+          currentPrediction={props.editingPrediction} />
+        :
+        <Prediction
+          key={i}
+          id={i}
+          title={title}
+          prob={prob}
+          correct={correct}
+          handleDelete={props.handleDelete}
+          handleEdit={props.handleEdit} />
+
   ),
   R.toPairs,
   R.filter(filter)
 )
 
-const PredictionsList = ({ predictions, handleDelete }) => {
-  return predictions !== null ? (
+const PredictionsList = (props) => {
+  return props.predictions !== null ? (
     <ul>
-      {renderPredictions(handleDelete, R.propEq('correct', 'unknown'))(predictions)}
-      {renderPredictions(handleDelete, R.propSatisfies(a => a !== 'unknown', 'correct'))(predictions)}
+      {renderPredictions(props, R.propEq('correct', 'unknown'))(props.predictions)}
+      {renderPredictions(props, R.propSatisfies(a => a !== 'unknown', 'correct'))(props.predictions)}
     </ul>
   ) : <div>Loading...</div>
 }
@@ -115,10 +135,15 @@ class App extends React.Component {
       currentPrediction: {
         title: '', prob: '50', correct: 'unknown'
       },
-      predictions: null
+      predictions: null,
+      editing: null,
+      editingPrediction: {}
     }
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleUpdate = this.handleUpdate.bind(this);
+    this.handleUpdateSubmit = this.handleUpdateSubmit.bind(this);
+    this.handleEdit = this.handleEdit.bind(this);
   }
 
   componentDidMount() {
@@ -127,7 +152,6 @@ class App extends React.Component {
         this.setState({ auth: true });
         database.ref('users/' + user.uid).on('value', snapshot => {
           this.setState({ predictions: snapshot.val().predictions })
-
         })
       } else {
         this.setState({ auth: false })
@@ -137,7 +161,7 @@ class App extends React.Component {
 
   handleInputChange(evt) {
     const target = evt.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const value = target.value;
     const name = target.name;
     const newPrediction = Object.assign({}, this.state.currentPrediction, { [name]: value })
     this.setState({ currentPrediction: newPrediction })
@@ -151,9 +175,28 @@ class App extends React.Component {
     this.setState({ currentPrediction: { title: '', prob: '50', correct: 'unknown' } })
   }
 
+  handleUpdate(evt) {
+    const target = evt.target;
+    const value = target.value;
+    const name = target.name;
+    const newPrediction = Object.assign({}, this.state.editingPrediction, { [name]: value })
+    this.setState({ editingPrediction: newPrediction })
+  }
+
+  handleUpdateSubmit(evt) {
+    evt.preventDefault();
+    const path = 'users/' + firebaseAuth.currentUser.uid + '/predictions/' + this.state.editing;
+    database.ref().update({ [path]: this.state.editingPrediction });
+    this.setState({ editing: null, editingPrediction: {} })
+  }
+
   handleDelete(key) {
     const path = 'users/' + firebaseAuth.currentUser.uid + '/predictions/' + key;
     database.ref().child(path).remove();
+  }
+
+  handleEdit(key) {
+    this.setState({ editing: key, editingPrediction: this.state.predictions[key] })
   }
 
   login(provider) {
@@ -177,10 +220,18 @@ class App extends React.Component {
       this.state.auth ?
         <div>
           <LogOutButton logout={this.logout} />
-          <PredictionForm handleInputChange={this.handleInputChange}
+          <PredictionForm
+            handleInputChange={this.handleInputChange}
             handleSubmit={this.handleSubmit}
             currentPrediction={this.state.currentPrediction} />
-          <PredictionsList predictions={this.state.predictions} handleDelete={this.handleDelete} />
+          <PredictionsList
+            predictions={this.state.predictions}
+            handleDelete={this.handleDelete}
+            editing={this.state.editing}
+            handleUpdate={this.handleUpdate}
+            handleUpdateSubmit={this.handleUpdateSubmit}
+            handleEdit={this.handleEdit}
+            editingPrediction={this.state.editingPrediction} />
           <Statistics predictions={this.state.predictions} />
         </div> :
         <div>
