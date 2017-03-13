@@ -4,6 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "webpack-dev-server --inline",
+    "compile": "webpack -p",
+    "copy": "cp index.html style.css build",
+    "build": "npm run copy && npm run compile",
+    "deploy": "firebase deploy",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
