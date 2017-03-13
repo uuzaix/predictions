@@ -151,7 +151,9 @@ class App extends React.Component {
       if (user) {
         this.setState({ auth: true });
         database.ref('users/' + user.uid).on('value', snapshot => {
-          this.setState({ predictions: snapshot.val().predictions })
+          snapshot.val() !== null ?
+            this.setState({ predictions: snapshot.val().predictions }) :
+            this.setState({ predictions: {} })
         })
       } else {
         this.setState({ auth: false })
