@@ -2,3 +2,47 @@ table, th, td {
     border: 1px solid black;
     border-collapse: collapse;
 }
+
+.container {
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+}
+
+@media (min-width: 600px) {
+    .container {
+        margin-left: 5em;
+        margin-right: 5em;
+    }
+}
+
+.card {
+    border: solid 1px #ccc;
+    border-radius: 0.3em;
+    padding: 1em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-title {
+    flex: 1;
+    margin-right: 1em;
+    margin-left: 2px;
+}
+
+.badge {
+    border-radius: 0.5em;
+    background-color: cadetblue;
+    padding: 0.5em;
+    font-weight: bold;
+}
+
+.input {
+    width: 100%;
+}
+
+.card-parameters > select, .card-parameters > span {
+    margin: 5px;
+}

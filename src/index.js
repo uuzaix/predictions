@@ -12,47 +12,52 @@ const LogOutButton = ({ logout }) => (
   <button onClick={() => logout()}>Logout</button>
 )
 
+const DeleteButton = (props) => (
+  <button onClick={() => props.handleDelete(props.id)}>☒</button>
+)
+
 const PredictionForm = (props) => (
-  <form onSubmit={props.handleSubmit}>
-    <label>
-      Title:
-    <input type='text'
+  <form className="card" onSubmit={props.handleSubmit}>
+    <div className="card-title">
+      <input
+        className="input"
+        type="text"
         name="title"
         onChange={props.handleInputChange}
         value={props.currentPrediction.title}
         placeholder="It will rain tomorrow"
         required />
-    </label>
-    <label>
-      Probability
+    </div>
+    <div className="card-parameters">
       <select name="prob" onChange={props.handleInputChange} value={props.currentPrediction.prob}>
-        <option value="50">50%</option>
-        <option value="60">60%</option>
-        <option value="70">70%</option>
-        <option value="80">80%</option>
-        <option value="90">90%</option>
-        <option value="95">95%</option>
-        <option value="97">97%</option>
-        <option value="99">99%</option>
+        <option value="50%">50%</option>
+        <option value="60%">60%</option>
+        <option value="70%">70%</option>
+        <option value="80%">80%</option>
+        <option value="90%">90%</option>
+        <option value="95%">95%</option>
+        <option value="97%">97%</option>
+        <option value="99%">99%</option>
       </select>
-    </label>
-    <label>
-      Correct?
-    <select type='checkbox' name="correct" onChange={props.handleInputChange} value={props.currentPrediction.correct}>
+      <select type='checkbox' name="correct" onChange={props.handleInputChange} value={props.currentPrediction.correct}>
         <option value="uknown">Uknown</option>
         <option value="correct">Correct</option>
         <option value="incorrect">Incorrect</option>
       </select>
-    </label>
-    <input type='submit' value='Submit' />
+      <input type='submit' value='☑' />
+      {props.edit && <DeleteButton id={props.id} handleDelete={props.handleDelete} />}
+    </div>
   </form >
 )
 
 const Prediction = (props) => (
-  <li key={props.id} onClick={() => props.handleEdit(props.id)}>
-    {props.title} {props.prob} {props.correct}
-    <button onClick={() => props.handleDelete(props.id)}>delete</button>
-  </li>
+  <div key={props.id} className="card" onClick={() => props.handleEdit(props.id)}>
+    <div className="card-title">{props.title}</div>
+    <div className="card-parameters">
+      <span className="probability badge">{props.prob}</span>
+      <span className="correctness badge">{props.correct}</span>
+    </div>
+  </div >
 )
 
 const renderPredictions = (props, filter) => R.compose(
@@ -61,9 +66,13 @@ const renderPredictions = (props, filter) => R.compose(
       props.editing === i ?
         <PredictionForm
           key={i}
+          id={i}
           handleInputChange={props.handleUpdate}
           handleSubmit={props.handleUpdateSubmit}
-          currentPrediction={props.editingPrediction} />
+          currentPrediction={props.editingPrediction}
+          handleDelete={props.handleDelete}
+          edit={true} />
+
         :
         <Prediction
           key={i}
@@ -71,7 +80,6 @@ const renderPredictions = (props, filter) => R.compose(
           title={title}
           prob={prob}
           correct={correct}
-          handleDelete={props.handleDelete}
           handleEdit={props.handleEdit} />
 
   ),
@@ -81,10 +89,10 @@ const renderPredictions = (props, filter) => R.compose(
 
 const PredictionsList = (props) => {
   return props.predictions !== null ? (
-    <ul>
+    <div>
       {renderPredictions(props, R.propEq('correct', 'unknown'))(props.predictions)}
       {renderPredictions(props, R.propSatisfies(a => a !== 'unknown', 'correct'))(props.predictions)}
-    </ul>
+    </div>
   ) : <div>Loading...</div>
 }
 
@@ -133,7 +141,7 @@ class App extends React.Component {
     this.state = {
       auth: false,
       currentPrediction: {
-        title: '', prob: '50', correct: 'unknown'
+        title: '', prob: '50%', correct: 'unknown'
       },
       predictions: null,
       editing: null,
@@ -174,7 +182,7 @@ class App extends React.Component {
     const path = 'users/' + firebaseAuth.currentUser.uid + '/predictions';
     const newPredKey = database.ref().child(path).push().key;
     database.ref().update({ [path + '/' + newPredKey]: this.state.currentPrediction });
-    this.setState({ currentPrediction: { title: '', prob: '50', correct: 'unknown' } })
+    this.setState({ currentPrediction: { title: '', prob: '50%', correct: 'unknown' } })
   }
 
   handleUpdate(evt) {
@@ -225,7 +233,8 @@ class App extends React.Component {
           <PredictionForm
             handleInputChange={this.handleInputChange}
             handleSubmit={this.handleSubmit}
-            currentPrediction={this.state.currentPrediction} />
+            currentPrediction={this.state.currentPrediction}
+            edit={false} />
           <PredictionsList
             predictions={this.state.predictions}
             handleDelete={this.handleDelete}
