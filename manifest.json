@@ -1,0 +1,14 @@
+{
+  "background_color": "#26037f",
+  "name": "Predictions",
+  "short_name": "Predictions",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "YOU-NEED-TO-HAVE-A-144-x-144-ICON.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    }
+  ],
+  "orientation": "portrait"
+}
