@@ -1,7 +1,8 @@
 import R from 'ramda';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import firebase from 'firebase'
+import firebase from 'firebase';
+
 import { firebaseApp, firebaseAuth, database, providerGithub, providerGoogle } from './firebase';
 
 const LoginButton = ({ login, provider, providerName }) => (
@@ -30,17 +31,17 @@ const PredictionForm = (props) => (
     </div>
     <div className="card-parameters">
       <select name="prob" onChange={props.handleInputChange} value={props.currentPrediction.prob}>
-        <option value="50%">50%</option>
-        <option value="60%">60%</option>
-        <option value="70%">70%</option>
-        <option value="80%">80%</option>
-        <option value="90%">90%</option>
-        <option value="95%">95%</option>
-        <option value="97%">97%</option>
-        <option value="99%">99%</option>
+        <option value="50">50%</option>
+        <option value="60">60%</option>
+        <option value="70">70%</option>
+        <option value="80">80%</option>
+        <option value="90">90%</option>
+        <option value="95">95%</option>
+        <option value="97">97%</option>
+        <option value="99">99%</option>
       </select>
       <select type='checkbox' name="correct" onChange={props.handleInputChange} value={props.currentPrediction.correct}>
-        <option value="uknown">Uknown</option>
+        <option value="unknown">Unknown</option>
         <option value="correct">Correct</option>
         <option value="incorrect">Incorrect</option>
       </select>
@@ -54,8 +55,8 @@ const Prediction = (props) => (
   <div key={props.id} className="card" onClick={() => props.handleEdit(props.id)}>
     <div className="card-title">{props.title}</div>
     <div className="card-parameters">
-      <span className="date">{props.date}</span>
-      <span className="probability badge">{props.prob}</span>
+      <span className="date">{new Date(props.date).toISOString().slice(0, 10)}</span>
+      <span className="probability badge">{props.prob}%</span>
       <span className="correctness badge">{props.correct}</span>
     </div>
   </div >
@@ -143,7 +144,7 @@ class App extends React.Component {
     this.state = {
       auth: false,
       currentPrediction: {
-        title: '', prob: '50%', correct: 'unknown'
+        title: '', prob: '50', correct: 'unknown'
       },
       predictions: null,
       editing: null,
@@ -183,10 +184,10 @@ class App extends React.Component {
     evt.preventDefault();
     const path = 'users/' + firebaseAuth.currentUser.uid + '/predictions';
     const newPredKey = database.ref().child(path).push().key;
-    const date = new Date()
-    const newPrediction = Object.assign({}, this.state.currentPrediction, { date: date.toDateString() })
+    const date = new Date().getTime();
+    const newPrediction = Object.assign({}, this.state.currentPrediction, { date })
     database.ref().update({ [path + '/' + newPredKey]: newPrediction });
-    this.setState({ currentPrediction: { title: '', prob: '50%', correct: 'unknown' } })
+    this.setState({ currentPrediction: { title: '', prob: '50', correct: 'unknown' } })
   }
 
   handleUpdate(evt) {
