@@ -143,6 +143,7 @@ class App extends React.Component {
     super(props)
     this.state = {
       auth: false,
+      loading: true,
       currentPrediction: {
         title: '', prob: '50', correct: 'unknown'
       },
@@ -157,17 +158,24 @@ class App extends React.Component {
     this.handleEdit = this.handleEdit.bind(this);
   }
 
+  // componentWillMount() {
+  //   console.log("zzzzzzz", firebaseAuth.currentUser)
+  //   if (firebaseAuth.currentUser) {
+  //     this.setState({ auth: true });
+  //   }
+  // }
+
   componentDidMount() {
     firebaseAuth.onAuthStateChanged(user => {
       if (user) {
-        this.setState({ auth: true });
+        this.setState({ auth: true, loading: false });
         database.ref('users/' + user.uid).on('value', snapshot => {
           snapshot.val() !== null ?
             this.setState({ predictions: snapshot.val().predictions }) :
             this.setState({ predictions: {} })
         })
       } else {
-        this.setState({ auth: false })
+        this.setState({ auth: false, loading: false })
       }
     });
   }
@@ -232,28 +240,30 @@ class App extends React.Component {
 
   render() {
     return (
-      this.state.auth ?
-        <div>
-          <LogOutButton logout={this.logout} />
-          <PredictionForm
-            handleInputChange={this.handleInputChange}
-            handleSubmit={this.handleSubmit}
-            currentPrediction={this.state.currentPrediction}
-            edit={false} />
-          <PredictionsList
-            predictions={this.state.predictions}
-            handleDelete={this.handleDelete}
-            editing={this.state.editing}
-            handleUpdate={this.handleUpdate}
-            handleUpdateSubmit={this.handleUpdateSubmit}
-            handleEdit={this.handleEdit}
-            editingPrediction={this.state.editingPrediction} />
-          <Statistics predictions={this.state.predictions} />
-        </div> :
-        <div>
-          <LoginButton login={this.login} provider={providerGithub} providerName='Github' />
-          <LoginButton login={this.login} provider={providerGoogle} providerName='Google' />
-        </div>
+      this.state.loading ?
+        <div>Loading...</div> :
+          this.state.auth ?
+            <div>
+              <LogOutButton logout={this.logout} />
+              <PredictionForm
+                handleInputChange={this.handleInputChange}
+                handleSubmit={this.handleSubmit}
+                currentPrediction={this.state.currentPrediction}
+                edit={false} />
+              <PredictionsList
+                predictions={this.state.predictions}
+                handleDelete={this.handleDelete}
+                editing={this.state.editing}
+                handleUpdate={this.handleUpdate}
+                handleUpdateSubmit={this.handleUpdateSubmit}
+                handleEdit={this.handleEdit}
+                editingPrediction={this.state.editingPrediction} />
+              <Statistics predictions={this.state.predictions} />
+            </div> :
+            <div>
+              <LoginButton login={this.login} provider={providerGithub} providerName='Github' />
+              <LoginButton login={this.login} provider={providerGoogle} providerName='Google' />
+            </div>
     )
   }
 }
