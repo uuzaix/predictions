@@ -54,6 +54,7 @@ const Prediction = (props) => (
   <div key={props.id} className="card" onClick={() => props.handleEdit(props.id)}>
     <div className="card-title">{props.title}</div>
     <div className="card-parameters">
+      <span className="date">{props.date}</span>
       <span className="probability badge">{props.prob}</span>
       <span className="correctness badge">{props.correct}</span>
     </div>
@@ -62,7 +63,7 @@ const Prediction = (props) => (
 
 const renderPredictions = (props, filter) => R.compose(
   R.map(
-    ([i, { title, prob, correct }]) =>
+    ([i, { title, date, prob, correct }]) =>
       props.editing === i ?
         <PredictionForm
           key={i}
@@ -78,6 +79,7 @@ const renderPredictions = (props, filter) => R.compose(
           key={i}
           id={i}
           title={title}
+          date={date}
           prob={prob}
           correct={correct}
           handleEdit={props.handleEdit} />
@@ -181,7 +183,9 @@ class App extends React.Component {
     evt.preventDefault();
     const path = 'users/' + firebaseAuth.currentUser.uid + '/predictions';
     const newPredKey = database.ref().child(path).push().key;
-    database.ref().update({ [path + '/' + newPredKey]: this.state.currentPrediction });
+    const date = new Date()
+    const newPrediction = Object.assign({}, this.state.currentPrediction, { date: date.toDateString() })
+    database.ref().update({ [path + '/' + newPredKey]: newPrediction });
     this.setState({ currentPrediction: { title: '', prob: '50%', correct: 'unknown' } })
   }
 

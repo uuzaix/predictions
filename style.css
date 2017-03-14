@@ -39,6 +39,10 @@ table, th, td {
     font-weight: bold;
 }
 
+.date {
+    font-size: small;
+}
+
 .input {
     width: 100%;
 }
