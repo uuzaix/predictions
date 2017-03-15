@@ -37,6 +37,15 @@ table, th, td {
     background-color: cadetblue;
     padding: 0.5em;
     font-weight: bold;
+    border: none;
+    outline: none;
+}
+
+.badge.incorrect {
+    background-color: chocolate;
+}
+.badge.unknown {
+    background-color: darkgray;
 }
 
 .date {
@@ -47,6 +56,19 @@ table, th, td {
     width: 100%;
 }
 
-.card-parameters > select, .card-parameters > span {
+.card-parameters > select, .card-parameters > span, .card-parameters > button {
     margin: 5px;
+}
+
+.btn-save-card {
+    background-color: mediumseagreen;
+}
+
+.btn-delete-card {
+    background-color: indianred;
+}
+
+button:focus, button:active {
+    border: none;
+    outline: none;
 }

@@ -6,15 +6,23 @@ import firebase from 'firebase';
 import { firebaseApp, firebaseAuth, database, providerGithub, providerGoogle } from './firebase';
 
 const LoginButton = ({ login, provider, providerName }) => (
-  <button onClick={() => login(provider)}>Login with {providerName}</button>
+  <button onClick={() => login(provider)}>
+    <i className="fa fa-sign-in" aria-hidden="true"></i>
+    Login with {providerName}
+  </button>
 )
 
 const LogOutButton = ({ logout }) => (
-  <button onClick={() => logout()}>Logout</button>
+  <button onClick={() => logout()}>
+    <i className="fa fa-sign-out" aria-hidden="true"></i>
+    Logout
+    </button>
 )
 
 const DeleteButton = (props) => (
-  <button onClick={() => props.handleDelete(props.id)}>☒</button>
+  <button onClick={() => props.handleDelete(props.id)} className=" badge btn-delete-card">
+    <i className="fa fa-trash fa-lg" aria-hidden="true"></i>
+  </button>
 )
 
 const PredictionForm = (props) => (
@@ -45,22 +53,32 @@ const PredictionForm = (props) => (
         <option value="correct">Correct</option>
         <option value="incorrect">Incorrect</option>
       </select>
-      <input type='submit' value='☑' />
       {props.edit && <DeleteButton id={props.id} handleDelete={props.handleDelete} />}
+      <button type='submit' className="badge btn-save-card"><i className="fa fa-check-square-o fa-lg" aria-hidden="true"></i></button>
     </div>
   </form >
 )
 
-const Prediction = (props) => (
-  <div key={props.id} className="card" onClick={() => props.handleEdit(props.id)}>
-    <div className="card-title">{props.title}</div>
-    <div className="card-parameters">
-      <span className="date">{new Date(props.date).toISOString().slice(0, 10)}</span>
-      <span className="probability badge">{props.prob}%</span>
-      <span className="correctness badge">{props.correct}</span>
-    </div>
-  </div >
-)
+const Prediction = (props) => {
+  let correctIconClass;
+  if (props.correct === 'correct') {
+    correctIconClass = "fa fa-thumbs-up fa-lg"
+  } else if (props.correct === 'incorrect') {
+    correctIconClass = "fa fa-thumbs-down fa-lg"
+  } else {
+    correctIconClass = "fa fa-question-circle-o fa-lg"
+  }
+  return (
+    <div key={props.id} className="card" onClick={() => props.handleEdit(props.id)}>
+      <div className="card-title">{props.title}</div>
+      <div className="card-parameters">
+        <span className="date">{new Date(props.date).toISOString().slice(0, 10)}</span>
+        <span className="probability badge">{props.prob}%</span>
+        <span className={"correctness badge " + props.correct}><i className={correctIconClass} aria-hidden="true"></i></span>
+      </div>
+    </div >
+  )
+}
 
 const renderPredictions = (props, filter) => R.compose(
   R.map(
@@ -158,13 +176,6 @@ class App extends React.Component {
     this.handleEdit = this.handleEdit.bind(this);
   }
 
-  // componentWillMount() {
-  //   console.log("zzzzzzz", firebaseAuth.currentUser)
-  //   if (firebaseAuth.currentUser) {
-  //     this.setState({ auth: true });
-  //   }
-  // }
-
   componentDidMount() {
     firebaseAuth.onAuthStateChanged(user => {
       if (user) {
@@ -242,28 +253,29 @@ class App extends React.Component {
     return (
       this.state.loading ?
         <div>Loading...</div> :
-          this.state.auth ?
-            <div>
-              <LogOutButton logout={this.logout} />
-              <PredictionForm
-                handleInputChange={this.handleInputChange}
-                handleSubmit={this.handleSubmit}
-                currentPrediction={this.state.currentPrediction}
-                edit={false} />
-              <PredictionsList
-                predictions={this.state.predictions}
-                handleDelete={this.handleDelete}
-                editing={this.state.editing}
-                handleUpdate={this.handleUpdate}
-                handleUpdateSubmit={this.handleUpdateSubmit}
-                handleEdit={this.handleEdit}
-                editingPrediction={this.state.editingPrediction} />
-              <Statistics predictions={this.state.predictions} />
-            </div> :
-            <div>
-              <LoginButton login={this.login} provider={providerGithub} providerName='Github' />
-              <LoginButton login={this.login} provider={providerGoogle} providerName='Google' />
-            </div>
+        this.state.auth ?
+          <div>
+            <LogOutButton logout={this.logout} />
+            <h1>Predictions</h1>
+            <PredictionForm
+              handleInputChange={this.handleInputChange}
+              handleSubmit={this.handleSubmit}
+              currentPrediction={this.state.currentPrediction}
+              edit={false} />
+            <PredictionsList
+              predictions={this.state.predictions}
+              handleDelete={this.handleDelete}
+              editing={this.state.editing}
+              handleUpdate={this.handleUpdate}
+              handleUpdateSubmit={this.handleUpdateSubmit}
+              handleEdit={this.handleEdit}
+              editingPrediction={this.state.editingPrediction} />
+            <Statistics predictions={this.state.predictions} />
+          </div> :
+          <div>
+            <LoginButton login={this.login} provider={providerGithub} providerName='Github' />
+            <LoginButton login={this.login} provider={providerGoogle} providerName='Google' />
+          </div>
     )
   }
 }
