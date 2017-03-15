@@ -4,6 +4,9 @@ import ReactDOM from 'react-dom';
 import firebase from 'firebase';
 
 import { firebaseApp, firebaseAuth, database, providerGithub, providerGoogle } from './firebase';
+import { Statistics } from './chart'
+
+
 
 const LoginButton = ({ login, provider, providerName }) => (
   <button onClick={() => login(provider)}>
@@ -20,7 +23,7 @@ const LogOutButton = ({ logout }) => (
 )
 
 const DeleteButton = (props) => (
-  <button onClick={() => props.handleDelete(props.id)} className=" badge btn-delete-card">
+  <button onClick={() => props.handleDelete(props.id)} className="badge btn-delete-card">
     <i className="fa fa-trash fa-lg" aria-hidden="true"></i>
   </button>
 )
@@ -115,45 +118,6 @@ const PredictionsList = (props) => {
       {renderPredictions(props, R.propSatisfies(a => a !== 'unknown', 'correct'))(props.predictions)}
     </div>
   ) : <div>Loading...</div>
-}
-
-const calcStat = R.compose(
-  R.map(
-    ([prob, data]) => {
-      return (
-        <tr key={prob}>
-          <td>{prob}</td>
-          <td>{data}</td>
-        </tr>
-      )
-    }
-  ), R.toPairs)
-
-const groupByProb = R.compose(
-  R.map(
-    R.compose(
-      data => R.sum(data) / data.length * 100,
-      R.map(({ correct }) => correct === 'correct' ? 1 : 0)
-    )
-  ),
-  R.groupBy(({ prob }) => prob),
-  R.filter(({ correct }) => correct !== 'unknown'),
-  R.values)
-
-const Statistics = ({ predictions }) => {
-  return (
-    <table>
-      <thead>
-        <tr>
-          <td>Probability</td>
-          <td>Correctness</td>
-        </tr>
-      </thead>
-      <tbody>
-        {calcStat(groupByProb(predictions))}
-      </tbody>
-    </table>
-  )
 }
 
 class App extends React.Component {

@@ -6,7 +6,7 @@
   "scripts": {
     "start": "webpack-dev-server --inline",
     "compile": "webpack -p",
-    "copy": "mkdir -p build && cp index.html style.css manifest.json build/",
+    "copy": "mkdir -p build && cp index.html style.css manifest.json icon.png build/",
     "build": "npm run copy && npm run compile",
     "deploy": "firebase deploy",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -19,7 +19,8 @@
     "normalize.css": "^5.0.0",
     "ramda": "^0.23.0",
     "react": "^15.4.2",
-    "react-dom": "^15.4.2"
+    "react-dom": "^15.4.2",
+    "recharts": "^0.21.2"
   },
   "devDependencies": {
     "babel-core": "^6.23.1",
