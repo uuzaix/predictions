@@ -6,20 +6,18 @@ import firebase from 'firebase';
 import { firebaseApp, firebaseAuth, database, providerGithub, providerGoogle } from './firebase';
 import { Statistics } from './chart'
 
-
-
 const LoginButton = ({ login, provider, providerName }) => (
-  <button onClick={() => login(provider)}>
-    <i className="fa fa-sign-in" aria-hidden="true"></i>
+  <button className={"btn-login " + providerName} onClick={() => login(provider)}>
+    {providerName === 'Google' ? <i className="fa fa-google" aria-hidden="true"></i> :
+      <i className="fa fa-github fa-lg" aria-hidden="true"></i>}
     Login with {providerName}
   </button>
 )
 
 const LogOutButton = ({ logout }) => (
-  <button onClick={() => logout()}>
-    <i className="fa fa-sign-out" aria-hidden="true"></i>
-    Logout
-    </button>
+  <button className="btn-logout" onClick={() => logout()}>
+    <i className="fa fa-sign-out fa-2x" aria-hidden="true"></i>
+  </button>
 )
 
 const DeleteButton = (props) => (
@@ -63,21 +61,12 @@ const PredictionForm = (props) => (
 )
 
 const Prediction = (props) => {
-  let correctIconClass;
-  if (props.correct === 'correct') {
-    correctIconClass = "fa fa-thumbs-up fa-lg"
-  } else if (props.correct === 'incorrect') {
-    correctIconClass = "fa fa-thumbs-down fa-lg"
-  } else {
-    correctIconClass = "fa fa-question-circle-o fa-lg"
-  }
   return (
-    <div key={props.id} className="card" onClick={() => props.handleEdit(props.id)}>
+    <div key={props.id} className={"card " + props.correct} onClick={() => props.handleEdit(props.id)}>
       <div className="card-title">{props.title}</div>
       <div className="card-parameters">
-        <span className="date">{new Date(props.date).toISOString().slice(0, 10)}</span>
+        {/*<span className="date">{new Date(props.date).toISOString().slice(0, 10)}</span>*/}
         <span className="probability badge">{props.prob}%</span>
-        <span className={"correctness badge " + props.correct}><i className={correctIconClass} aria-hidden="true"></i></span>
       </div>
     </div >
   )
@@ -95,7 +84,6 @@ const renderPredictions = (props, filter) => R.compose(
           currentPrediction={props.editingPrediction}
           handleDelete={props.handleDelete}
           edit={true} />
-
         :
         <Prediction
           key={i}
@@ -219,26 +207,32 @@ class App extends React.Component {
         <div>Loading...</div> :
         this.state.auth ?
           <div>
-            <LogOutButton logout={this.logout} />
-            <h1>Predictions</h1>
-            <PredictionForm
-              handleInputChange={this.handleInputChange}
-              handleSubmit={this.handleSubmit}
-              currentPrediction={this.state.currentPrediction}
-              edit={false} />
-            <PredictionsList
-              predictions={this.state.predictions}
-              handleDelete={this.handleDelete}
-              editing={this.state.editing}
-              handleUpdate={this.handleUpdate}
-              handleUpdateSubmit={this.handleUpdateSubmit}
-              handleEdit={this.handleEdit}
-              editingPrediction={this.state.editingPrediction} />
-            <Statistics predictions={this.state.predictions} />
+            <div className="header">
+              <h1 className="title text-center">Predictions</h1>
+              <LogOutButton logout={this.logout} />
+            </div>
+            <div className="container">
+              <PredictionForm
+                handleInputChange={this.handleInputChange}
+                handleSubmit={this.handleSubmit}
+                currentPrediction={this.state.currentPrediction}
+                edit={false} />
+              <PredictionsList
+                predictions={this.state.predictions}
+                handleDelete={this.handleDelete}
+                editing={this.state.editing}
+                handleUpdate={this.handleUpdate}
+                handleUpdateSubmit={this.handleUpdateSubmit}
+                handleEdit={this.handleEdit}
+                editingPrediction={this.state.editingPrediction} />
+              <Statistics predictions={this.state.predictions} />
+            </div>
           </div> :
-          <div>
-            <LoginButton login={this.login} provider={providerGithub} providerName='Github' />
-            <LoginButton login={this.login} provider={providerGoogle} providerName='Google' />
+          <div className="login">
+            <h1 className="text-center">Predictions</h1>
+            <h3 className="text-center">Keep track of your predictions and calibrate yourself</h3>
+            <LoginButton login={this.login} provider={providerGithub} providerName="Github" />
+            <LoginButton login={this.login} provider={providerGoogle} providerName="Google" />
           </div>
     )
   }

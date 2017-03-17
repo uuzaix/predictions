@@ -1,17 +1,19 @@
-table, th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
-}
-
 .container {
-    margin-left: 0.5em;
-    margin-right: 0.5em;
+    margin-left: 0.8em;
+    margin-right: 0.8em;
 }
 
-@media (min-width: 600px) {
+@media (min-width: 700px) {
     .container {
         margin-left: 5em;
         margin-right: 5em;
+    }
+}
+
+@media (min-width: 1000px) {
+    .container {
+        margin: auto;
+        max-width: 800px;
     }
 }
 
@@ -25,6 +27,7 @@ table, th, td {
     justify-content: space-between;
     align-items: center;
 }
+
 
 .card-title {
     flex: 1;
@@ -41,11 +44,11 @@ table, th, td {
     outline: none;
 }
 
-.badge.incorrect {
+.card.incorrect {
     background-color: chocolate;
 }
-.badge.unknown {
-    background-color: darkgray;
+.card.correct {
+    background-color: palegreen;
 }
 
 .date {
@@ -68,7 +71,61 @@ table, th, td {
     background-color: indianred;
 }
 
-button:focus, button:active {
+button:focus.bage, button:active.bage {
     border: none;
     outline: none;
+}
+
+.login {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    position: absolute;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #FFD394;
+}
+
+.btn-login {
+    margin: 15px;
+    border-radius: 0.35em;
+    padding: 10px;
+    border: solid 1px #000;
+    outline: none;
+}
+
+.btn-logout {
+    background-color: mediumseagreen;
+    border: none;
+}
+
+.btn-login.Google {
+    margin: 15px;
+    background-color: #EA4335;
+}
+
+.btn-login.Github {
+    margin: 15px;
+    background-color: #C6E48B;
+}
+
+.btn-login > .fa {
+    margin-right: 10px;
+}
+
+.header {
+    width:100%;
+    /*height: 30px;*/
+    display: flex;
+    justify-content: center;
+    /*align-content: center;*/
+    background-color: mediumseagreen;
+}
+
+.text-center {
+    text-align: center;
+}
+.title {
+    flex: 85%;
 }
