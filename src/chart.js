@@ -16,12 +16,12 @@ const perfectData = [
 export const PredictionsChart = ({ data }) => (
   <ResponsiveContainer aspect={1.5} width='100%'>
     <LineChart data={data}
-      margin={{ top: 10, right: 10, left: 10, bottom: 5 }}>
-      <XAxis dataKey="conf" label="Confidence level" />
-      <YAxis label="Correctness" />
+      margin={{ top: 10, right: 10, left: 1, bottom: 40 }}>
+      <XAxis dataKey="conf" label={<Text dy={40} dx={50} textAnchor="start">Confidence level</Text>} />
+      <YAxis label={<Text angle={270} verticalAnchor="start" textAnchor="end" width={300}>Correctness</Text>} />
       <CartesianGrid strokeDasharray="3 3" />
       <Tooltip labelFormatter={(label) => label + "% confidence level"} />
-      <Legend />
+      <Legend verticalAlign="top" height={36}/>
       <Line type="monotone" name="Your result" unit="%" dataKey="yours" stroke="#82ca9d" activeDot={{ r: 8 }} connectNulls={true} />
       <Line name="Perfect calibration" unit="%" type="monotone" dataKey="perfect" stroke="#8884d8" />
     </LineChart>
