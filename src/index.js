@@ -21,7 +21,7 @@ const LogOutButton = ({ logout }) => (
 )
 
 const DeleteButton = (props) => (
-  <button onClick={() => props.handleDelete(props.id)} className="badge btn-delete-card">
+  <button type="button" className="badge btn-delete-card" onClick={() => props.handleDelete(props.id)}>
     <i className="fa fa-trash fa-lg" aria-hidden="true"></i>
   </button>
 )
