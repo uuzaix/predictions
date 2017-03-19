@@ -6,7 +6,7 @@
   "scripts": {
     "start": "webpack-dev-server --inline",
     "compile": "webpack -p",
-    "copy": "mkdir -p build && cp index.html style.css manifest.json icon.png node_modules/normalize.css/normalize.css build/",
+    "copy": "mkdir -p build && cp index.html style.css manifest.json icon.png favicon.ico node_modules/normalize.css/normalize.css build/",
     "build": "npm run copy && npm run compile",
     "deploy": "firebase deploy",
     "test": "echo \"Error: no test specified\" && exit 1"

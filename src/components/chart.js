@@ -13,15 +13,15 @@ const perfectData = [
   { conf: 99, perfect: 99 }
 ];
 
-export const PredictionsChart = ({ data }) => (
+export const PredictionsChart = ({ predictions }) => (
   <ResponsiveContainer aspect={1.5} width='100%'>
-    <LineChart data={data}
+    <LineChart data={calcStat(groupByProb(predictions))}
       margin={{ top: 10, right: 10, left: 1, bottom: 40 }}>
-      <XAxis dataKey="conf" label={<Text dy={40} dx={50} textAnchor="start">Confidence level</Text>} />
+      <XAxis dataKey="conf" label={<Text dy={40} textAnchor="start">Confidence level</Text>} />
       <YAxis label={<Text angle={270} verticalAnchor="start" textAnchor="end" width={300}>Correctness</Text>} />
       <CartesianGrid strokeDasharray="3 3" />
       <Tooltip labelFormatter={(label) => label + "% confidence level"} />
-      <Legend verticalAlign="top" height={36}/>
+      <Legend verticalAlign="top" height={36} />
       <Line type="monotone" name="Your result" unit="%" dataKey="yours" stroke="#82ca9d" activeDot={{ r: 8 }} connectNulls={true} />
       <Line name="Perfect calibration" unit="%" type="monotone" dataKey="perfect" stroke="#8884d8" />
     </LineChart>
@@ -30,7 +30,7 @@ export const PredictionsChart = ({ data }) => (
 
 const calcStat = (data) => R.map(
   level => Object.assign({}, level, { yours: data[level.conf] }),
-  perfectData)
+  perfectData);
 
 const groupByProb = R.compose(
   R.map(
@@ -43,8 +43,8 @@ const groupByProb = R.compose(
   R.filter(({ correct }) => correct !== 'unknown'),
   R.values)
 
-export const Statistics = ({ predictions }) =>
-  <PredictionsChart data={calcStat(groupByProb(predictions))} />
+// export const Statistics = ({ predictions }) =>
+//   <PredictionsChart data={calcStat(groupByProb(predictions))} />
 
 
 

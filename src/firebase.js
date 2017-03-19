@@ -9,7 +9,7 @@ var config = {
 };
 
 
-export const firebaseApp = firebase.initializeApp(config);
+const firebaseApp = firebase.initializeApp(config);
 export const firebaseAuth = firebaseApp.auth()
 export const database = firebaseApp.database();
 export const providerGithub = new firebase.auth.GithubAuthProvider();
