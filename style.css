@@ -1,3 +1,12 @@
+html, body {
+    font-family: 'Muli', sans-serif;
+    font-size: 0.9em;
+}
+
+#root {
+    background-color: #E2DFA2;
+}
+
 .container {
     margin-left: 0.8em;
     margin-right: 0.8em;
@@ -8,24 +17,28 @@
         margin-left: 5em;
         margin-right: 5em;
     }
+    html, body {
+    font-size: 1em;
+}
 }
 
 @media (min-width: 1000px) {
     .container {
         margin: auto;
-        max-width: 800px;
+        max-width: 700px;
     }
 }
 
 .card {
-    border: solid 1px #ccc;
     border-radius: 0.3em;
-    padding: 1em;
-    margin-top: 1em;
-    margin-bottom: 1em;
+    padding: .5em;
+    padding-right: 0px;
+    overflow: hidden;
+    margin-bottom: .5em;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background-color: white;
 }
 
 
@@ -36,8 +49,7 @@
 }
 
 .badge {
-    border-radius: 0.5em;
-    background-color: cadetblue;
+    background-color: #A1BE95;
     padding: 0.5em;
     font-weight: bold;
     border: none;
@@ -45,10 +57,13 @@
 }
 
 .card.incorrect {
-    background-color: chocolate;
+    border-left: 8px solid #ED5752;
 }
 .card.correct {
-    background-color: palegreen;
+    border-left: 8px solid #92AAC7;
+}
+.card.unknown {
+    border-left: 8px solid white;
 }
 
 .date {
@@ -59,16 +74,16 @@
     width: 100%;
 }
 
-.card-parameters > select, .card-parameters > span, .card-parameters > button {
+.card-parameters > select, .card-parameters > button {
     margin: 5px;
 }
 
 .btn-save-card {
-    background-color: mediumseagreen;
+    border-radius: 0.3em;
 }
 
 .btn-delete-card {
-    background-color: indianred;
+    background-color: #ED5752;
 }
 
 button:focus.bage, button:active.bage {
@@ -96,7 +111,8 @@ button:focus.bage, button:active.bage {
 }
 
 .btn-logout {
-    background-color: mediumseagreen;
+    background-color: #A1BE95;
+    color: white;
     border: none;
 }
 
@@ -116,11 +132,9 @@ button:focus.bage, button:active.bage {
 
 .header {
     width:100%;
-    /*height: 30px;*/
     display: flex;
     justify-content: center;
-    /*align-content: center;*/
-    background-color: mediumseagreen;
+    background-color: #A1BE95;
 }
 
 .text-center {
@@ -128,4 +142,20 @@ button:focus.bage, button:active.bage {
 }
 .title {
     flex: 85%;
+    color: white;
+    font-weight: bold;
+    margin:0.4em;
+}
+
+.card-form {
+    background-color: white;
+    margin-top: 10px
+}
+
+.recharts-wrapper {
+    background-color: white;
+}
+
+input, select {
+    border-radius: 0.3em;
 }

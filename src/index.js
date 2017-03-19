@@ -27,7 +27,7 @@ const DeleteButton = (props) => (
 )
 
 const PredictionForm = (props) => (
-  <form className="card" onSubmit={props.handleSubmit}>
+  <form className="card card-form" onSubmit={props.handleSubmit}>
     <div className="card-title">
       <input
         className="input"
