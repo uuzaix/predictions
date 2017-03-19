@@ -8,7 +8,7 @@ import { Statistics } from './chart'
 
 const LoginButton = ({ login, provider, providerName }) => (
   <button className={"btn-login " + providerName} onClick={() => login(provider)}>
-    {providerName === 'Google' ? <i className="fa fa-google" aria-hidden="true"></i> :
+    {providerName === 'Google' ? <i className="fa fa-google  fa-lg" aria-hidden="true"></i> :
       <i className="fa fa-github fa-lg" aria-hidden="true"></i>}
     Login with {providerName}
   </button>

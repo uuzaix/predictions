@@ -18,8 +18,11 @@ html, body {
         margin-right: 5em;
     }
     html, body {
-    font-size: 1em;
-}
+        font-size: 1em;
+    }
+    .card {
+        padding: 1.5em;
+    }
 }
 
 @media (min-width: 1000px) {
@@ -41,6 +44,15 @@ html, body {
     background-color: white;
 }
 
+.card.incorrect {
+    border-left: 8px solid #ED5752;
+}
+.card.correct {
+    border-left: 8px solid #92AAC7;
+}
+.card.unknown {
+    border-left: 8px solid white;
+}
 
 .card-title {
     flex: 1;
@@ -51,19 +63,12 @@ html, body {
 .badge {
     background-color: #A1BE95;
     padding: 0.5em;
-    font-weight: bold;
     border: none;
     outline: none;
 }
 
-.card.incorrect {
-    border-left: 8px solid #ED5752;
-}
-.card.correct {
-    border-left: 8px solid #92AAC7;
-}
-.card.unknown {
-    border-left: 8px solid white;
+.probability {
+    font-weight: bold;
 }
 
 .date {
@@ -83,6 +88,7 @@ html, body {
 }
 
 .btn-delete-card {
+    border-radius: 0.3em;
     background-color: #ED5752;
 }
 
@@ -99,15 +105,21 @@ button:focus.bage, button:active.bage {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #FFD394;
+    background-color: #E2DFA2;
 }
 
 .btn-login {
     margin: 15px;
-    border-radius: 0.35em;
+    border-radius: 0.3em;
     padding: 10px;
-    border: solid 1px #000;
+    border: none;
     outline: none;
+    box-shadow: 0 1px 2px #584c46;
+}
+
+.btn-login:active {
+  box-shadow: 0 0px;
+  transform: translateY(1px);
 }
 
 .btn-logout {
@@ -118,12 +130,12 @@ button:focus.bage, button:active.bage {
 
 .btn-login.Google {
     margin: 15px;
-    background-color: #EA4335;
+    background-color: #ED5752;
 }
 
 .btn-login.Github {
     margin: 15px;
-    background-color: #C6E48B;
+    background-color: #A1BE95;
 }
 
 .btn-login > .fa {
