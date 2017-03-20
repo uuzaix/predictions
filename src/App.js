@@ -26,6 +26,7 @@ export class App extends React.Component {
     this.handleUpdate = this.handleUpdate.bind(this);
     this.handleUpdateSubmit = this.handleUpdateSubmit.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
+    this.onClickOutside = this.onClickOutside.bind(this);
   }
 
   componentDidMount() {
@@ -41,6 +42,10 @@ export class App extends React.Component {
         this.setState({ auth: false, loading: false })
       }
     });
+  }
+
+  onClickOutside() {
+    this.setState({ editing: null, editingPrediction: {} })
   }
 
   handleInputChange(evt) {
@@ -124,6 +129,7 @@ export class App extends React.Component {
                 handleUpdate={this.handleUpdate}
                 handleUpdateSubmit={this.handleUpdateSubmit}
                 handleEdit={this.handleEdit}
+                onClickOutside={this.onClickOutside}
                 editingPrediction={this.state.editingPrediction} />
               <PredictionsChart predictions={this.state.predictions} />
             </div>
