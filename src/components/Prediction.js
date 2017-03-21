@@ -6,7 +6,11 @@ export const Prediction = (props) => {
       <div className="card-title">{props.title}</div>
       <div className="card-parameters">
         {/*<span className="date">{new Date(props.date).toISOString().slice(0, 10)}</span>*/}
-        <span className="probability badge">{props.prob}%</span>
+        <div className="badge">
+          <div className="probability">
+            {props.prob}%
+          </div>
+        </div>
       </div>
     </div >
   )
