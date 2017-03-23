@@ -28,13 +28,13 @@ export const PredictionsChart = ({ predictions }) => (
       </LineChart>
     </ResponsiveContainer>
   )
-) 
+)
 
-const calcStat = (data) => R.map(
+export const calcStat = (data) => R.map(
   level => Object.assign({}, level, { yours: data[level.conf] }),
   perfectData);
 
-const groupByProb = R.compose(
+export const groupByProb = R.compose(
   R.map(
     R.compose(
       data => (R.sum(data) / data.length * 100).toFixed(2),
@@ -44,3 +44,6 @@ const groupByProb = R.compose(
   R.groupBy(({ prob }) => prob),
   R.filter(({ correct }) => correct !== 'unknown'),
   R.values)
+
+
+console.log(groupByProb({ 1: { correct: "correct", prob: 50, title: "aaa" }, 2: { correct: "correct", prob: 60, title: "bbb" }, 3: { correct: "incorrect", prob: 60, title: "ccc" }, 4: { correct: "unknown", prob: 50, title: "ddd"} }))
