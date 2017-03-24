@@ -10,7 +10,7 @@ html, body {
 }
 
 #root {
-    background-color: #E2DFA2;
+    background-color: #e0dedc;
 }
 
 .container {
@@ -47,10 +47,10 @@ html, body {
 }
 
 .card.incorrect {
-    border-left: 8px solid #ED5752;
+    border-left: 8px solid #AF1C1C;
 }
 .card.correct {
-    border-left: 8px solid #92AAC7;
+    border-left: 8px solid #31A2C2;
 }
 .card.unknown {
     border-left: 8px solid white;
@@ -62,11 +62,12 @@ html, body {
 }
 
 .badge {
-    background-color: #A1BE95;
+    background-color: #6e6b6b;
     padding: 0.5em;
     border: none;
     outline: none;
     display: flex;
+    color: white;
 }
 
 .probability {
@@ -97,7 +98,7 @@ html, body {
 
 .btn-delete-card {
     border-radius: 0.3em;
-    background-color: #ED5752;
+    background-color: #AF1C1C;
 }
 
 button:focus.bage, button:active.bage {
@@ -113,7 +114,7 @@ button:focus.bage, button:active.bage {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #E2DFA2;
+    background-color: #e0dedc;
 }
 
 .btn-login {
@@ -131,19 +132,17 @@ button:focus.bage, button:active.bage {
 }
 
 .btn-logout {
-    background-color: #A1BE95;
+    background-color: #2F2F28;
     color: white;
     border: none;
 }
 
 .btn-login.Google {
-    margin: 15px;
-    background-color: #ED5752;
+    background-color: #AF1C1C;
 }
 
 .btn-login.Github {
-    margin: 15px;
-    background-color: #A1BE95;
+    background-color: #31A2C2;
 }
 
 .btn-login > .fa {
@@ -154,7 +153,7 @@ button:focus.bage, button:active.bage {
     width:100%;
     display: flex;
     justify-content: center;
-    background-color: #A1BE95;
+    background-color: #2F2F28;
 }
 
 .text-center {
@@ -178,5 +177,5 @@ button:focus.bage, button:active.bage {
 
 input, select {
     border-radius: 0.3em;
-    font-size: 0.9em
+    font-size: 0.9em;
 }
