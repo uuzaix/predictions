@@ -44,6 +44,3 @@ export const groupByProb = R.compose(
   R.groupBy(({ prob }) => prob),
   R.filter(({ correct }) => correct !== 'unknown'),
   R.values)
-
-
-console.log(groupByProb({ 1: { correct: "correct", prob: 50, title: "aaa" }, 2: { correct: "correct", prob: 60, title: "bbb" }, 3: { correct: "incorrect", prob: 60, title: "ccc" }, 4: { correct: "unknown", prob: 50, title: "ddd"} }))
