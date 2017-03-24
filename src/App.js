@@ -2,10 +2,11 @@ import R from 'ramda';
 import React from 'react';
 
 import { firebaseAuth, database, providerGithub, providerGoogle } from './firebase';
-import { PredictionsChart } from './components/chart';
-import { LoginButton, LogOutButton, DeleteButton } from './components/buttons';
-import { PredictionForm } from './components/PredictionForm';
+import { Login } from './components/Login';
+import { Header } from './components/Header';
 import { PredictionsList } from './components/PredictionsList';
+import { PredictionForm } from './components/PredictionForm';
+import { PredictionsChart } from './components/chart';
 
 
 export class App extends React.Component {
@@ -112,10 +113,7 @@ export class App extends React.Component {
         <div>Loading...</div> :
         this.state.auth ?
           <div>
-            <div className="header">
-              <h1 className="title text-center">Predictions</h1>
-              <LogOutButton logout={this.logout} />
-            </div>
+            <Header logout={this.logout} />
             <div className="container">
               <PredictionForm
                 handleInputChange={this.handleInputChange}
@@ -134,12 +132,7 @@ export class App extends React.Component {
               <PredictionsChart predictions={this.state.predictions} />
             </div>
           </div> :
-          <div className="login">
-            <h1 className="text-center">Predictions</h1>
-            <h3 className="text-center">Keep track of your predictions and calibrate yourself</h3>
-            <LoginButton login={this.login} provider={providerGithub} providerName="Github" />
-            <LoginButton login={this.login} provider={providerGoogle} providerName="Google" />
-          </div>
+          <Login login={this.login} />
     )
   }
 }
