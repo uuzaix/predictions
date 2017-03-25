@@ -8,7 +8,7 @@
     "compile": "webpack -p",
     "copy": "mkdir -p build && cp index.html style.css manifest.json icon.png favicon.ico node_modules/normalize.css/normalize.css build/",
     "build": "npm run copy && npm run compile",
-    "deploy": "firebase deploy",
+    "deploy-firebase": "firebase deploy",
     "test": "mocha  --compilers js:babel-register test/*.test.js"
   },
   "keywords": [],
