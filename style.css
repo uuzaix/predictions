@@ -7,10 +7,24 @@
 html, body {
     font-family: 'Muli', sans-serif;
     font-size: 0.9em;
+    height: 100%;
+}
+
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+ }
+
+table {
+    margin: 0 auto;
 }
 
 #root {
     background-color: #e0dedc;
+    position: relative;
+    height: auto;
+    min-height: 100%;
 }
 
 .container {

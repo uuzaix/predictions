@@ -6,7 +6,7 @@ import { Login } from './components/Login';
 import { Header } from './components/Header';
 import { PredictionsList } from './components/PredictionsList';
 import { PredictionForm } from './components/PredictionForm';
-import { PredictionsChart } from './components/chart';
+import { Statistic } from './components/Statistic';
 
 
 export class App extends React.Component {
@@ -15,6 +15,7 @@ export class App extends React.Component {
     this.state = {
       auth: false,
       loading: true,
+      showTable: true,
       currentPrediction: {
         title: '', prob: '50', correct: 'unknown'
       },
@@ -28,6 +29,7 @@ export class App extends React.Component {
     this.handleUpdateSubmit = this.handleUpdateSubmit.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
     this.onClickOutside = this.onClickOutside.bind(this);
+    this.handleStatClick = this.handleStatClick.bind(this);
   }
 
   componentDidMount() {
@@ -91,6 +93,10 @@ export class App extends React.Component {
     this.setState({ editing: key, editingPrediction: this.state.predictions[key] })
   }
 
+  handleStatClick() {
+    this.setState({ showTable: !this.state.showTable })
+  }
+
   login(provider) {
     firebaseAuth.signInWithPopup(provider).then(result => {
       const user = result.user;
@@ -129,7 +135,9 @@ export class App extends React.Component {
                 handleEdit={this.handleEdit}
                 onClickOutside={this.onClickOutside}
                 editingPrediction={this.state.editingPrediction} />
-              <PredictionsChart predictions={this.state.predictions} />
+              <Statistic predictions={this.state.predictions}
+                showTable={this.state.showTable}
+                handleStatClick={this.handleStatClick} />
             </div>
           </div> :
           <Login login={this.login} />
