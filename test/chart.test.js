@@ -2,7 +2,7 @@ import R from 'ramda';
 import { describe, it } from 'mocha';
 import { expect } from 'chai';
 
-import { calcStat, groupByProb } from '../src/components/chart'
+import { calcChartStat, groupByProb, perfectData, calcTableStat } from '../src/components/statCalculations'
 
 
 describe('groupByProb', () => {
@@ -31,6 +31,22 @@ describe('groupByProb', () => {
     const result = groupByProb(predictions);
 
     expect(result).to.be.deep.equal({ '50': '100.00', '60': '33.33' });
+  });
+
+});
+
+describe('calcStat', () => {
+
+  it('should handle empty object', () => {
+    const result = calcChartStat({});
+    expect(result).to.deep.equal(perfectData);
+  });
+
+  it('should add user result correctly', () => {
+    const predictions = { '50': '100' };
+    const result = calcChartStat(predictions);
+    const expectedResult = [Object.assign({}, perfectData[0], { 'yours': '100' }), ...R.drop(1, perfectData)]
+    expect(result).to.be.deep.equal(expectedResult);
   });
 
 });
