@@ -8,7 +8,7 @@ import ClickListner from './clickListener'
 const renderPredictions = (props, filter) => R.compose(
   R.map(
     ([i, { title, date, prob, correct }]) =>
-      props.editing === i ?
+      /*props.editing === i ?
         <ClickListner onClickOutside={props.onClickOutside} >
           <PredictionForm
             key={i}
@@ -19,7 +19,7 @@ const renderPredictions = (props, filter) => R.compose(
             handleDelete={props.handleDelete}
             edit={true} />
         </ClickListner>
-        :
+        :*/
         <Prediction
           key={i}
           id={i}

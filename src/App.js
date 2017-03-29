@@ -7,6 +7,7 @@ import { Header } from './components/Header';
 import { PredictionsList } from './components/PredictionsList';
 import { PredictionForm } from './components/PredictionForm';
 import { Statistic } from './components/Statistic';
+import { EditPrediction } from './components/Modal';
 
 
 export class App extends React.Component {
@@ -16,6 +17,7 @@ export class App extends React.Component {
       auth: false,
       loading: true,
       showTable: true,
+      adding: false,
       currentPrediction: {
         title: '', prob: '50', correct: 'unknown'
       },
@@ -28,8 +30,11 @@ export class App extends React.Component {
     this.handleUpdate = this.handleUpdate.bind(this);
     this.handleUpdateSubmit = this.handleUpdateSubmit.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
+    this.handleAddNew = this.handleAddNew.bind(this);
     this.onClickOutside = this.onClickOutside.bind(this);
     this.handleStatClick = this.handleStatClick.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
+    this.handleCloseModal = this.handleCloseModal.bind(this);
   }
 
   componentDidMount() {
@@ -51,6 +56,10 @@ export class App extends React.Component {
     this.setState({ editing: null, editingPrediction: {} })
   }
 
+  handleAddNew() {
+    this.setState({ adding: true })
+  }
+
   handleInputChange(evt) {
     const target = evt.target;
     const value = target.value;
@@ -66,7 +75,7 @@ export class App extends React.Component {
     const date = new Date().getTime();
     const newPrediction = Object.assign({}, this.state.currentPrediction, { date })
     database.ref().update({ [path + '/' + newPredKey]: newPrediction });
-    this.setState({ currentPrediction: { title: '', prob: '50', correct: 'unknown' } })
+    this.setState({ adding: false, currentPrediction: { title: '', prob: '50', correct: 'unknown' } })
   }
 
   handleUpdate(evt) {
@@ -87,6 +96,7 @@ export class App extends React.Component {
   handleDelete(key) {
     const path = 'users/' + firebaseAuth.currentUser.uid + '/predictions/' + key;
     database.ref().child(path).remove();
+    this.setState({ editing: null, editingPrediction: {} })
   }
 
   handleEdit(key) {
@@ -95,6 +105,10 @@ export class App extends React.Component {
 
   handleStatClick() {
     this.setState({ showTable: !this.state.showTable })
+  }
+
+  handleCloseModal() {
+    this.setState({ editing: null, editingPrediction: {}, adding: false, currentPrediction: { title: '', prob: '50', correct: 'unknown' } })
   }
 
   login(provider) {
@@ -121,10 +135,18 @@ export class App extends React.Component {
           <div>
             <Header logout={this.logout} />
             <div className="container">
-              <PredictionForm
+              {/*<PredictionForm
                 handleInputChange={this.handleInputChange}
                 handleSubmit={this.handleSubmit}
                 currentPrediction={this.state.currentPrediction}
+                edit={false} />*/}
+              <button onClick={() => this.handleAddNew()}>Add new Prediction</button>
+              <EditPrediction
+                showModal={this.state.adding}
+                currentPrediction={this.state.currentPrediction}
+                handleCloseModal={this.handleCloseModal}
+                handleUpdate={this.handleInputChange}
+                handleUpdateSubmit={this.handleSubmit}
                 edit={false} />
               <PredictionsList
                 predictions={this.state.predictions}
@@ -135,9 +157,19 @@ export class App extends React.Component {
                 handleEdit={this.handleEdit}
                 onClickOutside={this.onClickOutside}
                 editingPrediction={this.state.editingPrediction} />
-              <Statistic predictions={this.state.predictions}
+              <Statistic
+                predictions={this.state.predictions}
                 showTable={this.state.showTable}
                 handleStatClick={this.handleStatClick} />
+              <EditPrediction
+                showModal={this.state.editing !== null}
+                id={this.state.editing}
+                currentPrediction={this.state.editingPrediction}
+                handleCloseModal={this.handleCloseModal}
+                handleUpdate={this.handleUpdate}
+                handleUpdateSubmit={this.handleUpdateSubmit}
+                handleDelete={this.handleDelete}
+                edit={true} />
             </div>
           </div> :
           <Login login={this.login} />
