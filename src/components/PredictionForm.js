@@ -1,10 +1,11 @@
 import React from 'react';
+import R from 'ramda';
 import { DeleteButton } from './buttons';
 
 export const PredictionForm = (props) => (
   <form className="card card-form" onSubmit={props.handleSubmit}>
     <div className="card-title">
-      <input
+      <textarea
         className="input"
         type="text"
         name="title"
@@ -14,27 +15,35 @@ export const PredictionForm = (props) => (
         required />
     </div>
     <div className="card-parameters">
-      <div className="card-delete">
-        {props.edit && <DeleteButton id={props.id} handleDelete={props.handleDelete} />}
+      <div className="probability-select">
+        {
+          R.map(val => {
+            const applyClassProb = props.currentPrediction.prob === val ? "prob selected" : "prob";
+            return (
+              <div id={"prob" + val} className={applyClassProb} onClick={() => props.handleInputChange({ target: { name: 'prob', value: val } })}>{val + '%'}</div>
+            )
+          },
+            ["50", "60", "70", "80", "90", "95", "97", "99"]
+          )
+        }
       </div>
-      <div className="card-change">
-        <select name="prob" onChange={props.handleInputChange} value={props.currentPrediction.prob}>
-          <option value="50">50%</option>
-          <option value="60">60%</option>
-          <option value="70">70%</option>
-          <option value="80">80%</option>
-          <option value="90">90%</option>
-          <option value="95">95%</option>
-          <option value="97">97%</option>
-          <option value="99">99%</option>
-        </select>
-        <select name="correct" onChange={props.handleInputChange} value={props.currentPrediction.correct}>
-          <option value="unknown">Unknown</option>
-          <option value="correct">Correct</option>
-          <option value="incorrect">Incorrect</option>
-        </select>
-        <button type='submit' className="badge btn-save-card"><i className="fa fa-check-square-o fa-lg" aria-hidden="true"></i></button>
+      <div className="correct-select">
+        {
+          R.map(val => {
+            const applyClass = props.currentPrediction.correct === val ? "correctness selected" : "corectness";
+            return (
+              <div id={val} className={applyClass} onClick={() => props.handleInputChange({ target: { name: 'correct', value: val } })}>{val}</div>
+            )
+          },
+            ["unknown", "correct", "incorrect"]
+          )
+        }
       </div>
+      <button type='submit' className="badge btn-save-card"><i className="fa fa-check-square-o fa-lg" aria-hidden="true"></i></button>
+
+    </div>
+    <div className="card-delete">
+      {props.edit && <DeleteButton id={props.id} handleDelete={props.handleDelete} />}
     </div>
   </form >
 )

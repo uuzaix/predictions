@@ -25,14 +25,14 @@ export class App extends React.Component {
       editing: null,
       editingPrediction: {}
     }
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleUpdate = this.handleUpdate.bind(this);
-    this.handleUpdateSubmit = this.handleUpdateSubmit.bind(this);
+    this.handleInputChangeOnAdd = this.handleInputChangeOnAdd.bind(this);
+    this.handleSubmitAdd = this.handleSubmitAdd.bind(this);
+    this.handleInputChangeOnUpdate = this.handleInputChangeOnUpdate.bind(this);
+    this.handleSubmitUpdate = this.handleSubmitUpdate.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
-    this.handleAddNew = this.handleAddNew.bind(this);
     this.onClickOutside = this.onClickOutside.bind(this);
     this.handleStatClick = this.handleStatClick.bind(this);
+    this.handleAddNew = this.handleAddNew.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
   }
@@ -60,7 +60,7 @@ export class App extends React.Component {
     this.setState({ adding: true })
   }
 
-  handleInputChange(evt) {
+  handleInputChangeOnAdd(evt) {
     const target = evt.target;
     const value = target.value;
     const name = target.name;
@@ -68,7 +68,12 @@ export class App extends React.Component {
     this.setState({ currentPrediction: newPrediction })
   }
 
-  handleSubmit(evt) {
+  // handleSelect({ name, value }) {
+  //   const newPrediction = Object.assign({}, this.state.currentPrediction, { [name]: value })
+  //   this.setState({ currentPrediction: newPrediction })
+  // }
+
+  handleSubmitAdd(evt) {
     evt.preventDefault();
     const path = 'users/' + firebaseAuth.currentUser.uid + '/predictions';
     const newPredKey = database.ref().child(path).push().key;
@@ -78,7 +83,7 @@ export class App extends React.Component {
     this.setState({ adding: false, currentPrediction: { title: '', prob: '50', correct: 'unknown' } })
   }
 
-  handleUpdate(evt) {
+  handleInputChangeOnUpdate(evt) {
     const target = evt.target;
     const value = target.value;
     const name = target.name;
@@ -86,7 +91,7 @@ export class App extends React.Component {
     this.setState({ editingPrediction: newPrediction })
   }
 
-  handleUpdateSubmit(evt) {
+  handleSubmitUpdate(evt) {
     evt.preventDefault();
     const path = 'users/' + firebaseAuth.currentUser.uid + '/predictions/' + this.state.editing;
     database.ref().update({ [path]: this.state.editingPrediction });
@@ -145,8 +150,8 @@ export class App extends React.Component {
                 showModal={this.state.adding}
                 currentPrediction={this.state.currentPrediction}
                 handleCloseModal={this.handleCloseModal}
-                handleUpdate={this.handleInputChange}
-                handleUpdateSubmit={this.handleSubmit}
+                handleInputChange={this.handleInputChangeOnAdd}
+                handleSubmit={this.handleSubmitAdd}
                 edit={false} />
               <PredictionsList
                 predictions={this.state.predictions}
@@ -166,8 +171,8 @@ export class App extends React.Component {
                 id={this.state.editing}
                 currentPrediction={this.state.editingPrediction}
                 handleCloseModal={this.handleCloseModal}
-                handleUpdate={this.handleUpdate}
-                handleUpdateSubmit={this.handleUpdateSubmit}
+                handleInputChange={this.handleInputChangeOnUpdate}
+                handleSubmit={this.handleSubmitUpdate}
                 handleDelete={this.handleDelete}
                 edit={true} />
             </div>

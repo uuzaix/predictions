@@ -14,8 +14,8 @@ export const EditPrediction = (props) => (
       <button onClick={props.handleCloseModal}>Close Modal</button>
       <PredictionForm
         id={props.id}
-        handleInputChange={props.handleUpdate}
-        handleSubmit={props.handleUpdateSubmit}
+        handleInputChange={props.handleInputChange}
+        handleSubmit={props.handleSubmit}
         currentPrediction={props.currentPrediction}
         handleDelete={props.handleDelete}
         edit={props.edit} />
