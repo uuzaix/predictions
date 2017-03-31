@@ -52,6 +52,13 @@ table {
 .card.unknown {
     border-left: 8px solid white;
 }
+.correctness.selected {
+    background-color: red;;
+}
+
+.prob.selected {
+    background-color: red;;
+}
 
 .card-title {
     flex: 1;
@@ -194,6 +201,16 @@ input, select {
     display: flex;
     justify-content: space-around;
     align-items: center;
+}
+
+.probability-select {
+    display: flex;
+    flex-direction: column;
+}
+
+.correct-select {
+    display: flex;
+    flex-direction: column;
 }
 
 
