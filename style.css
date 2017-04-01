@@ -53,11 +53,11 @@ table {
     border-left: 8px solid white;
 }
 .correctness.selected {
-    background-color: red;;
+    background-color: red;
 }
 
 .prob.selected {
-    background-color: red;;
+    background-color: red;
 }
 
 .card-title {
@@ -213,6 +213,13 @@ input, select {
     flex-direction: column;
 }
 
+button {
+    cursor: pointer;
+}
+
+.pointer {
+    cursor: pointer;
+}
 
 @media (min-width: 700px) {
     .container {
@@ -222,9 +229,9 @@ input, select {
     html, body {
         font-size: 1em;
     }
-    .card-form {
+    /*.card-form {
         flex-direction: row;
-    }
+    }*/
     .card-form .card-title {
         margin-top: 2em;
         margin-bottom: 2em;

@@ -16,7 +16,7 @@ export const EditPrediction = (props) => (
         id={props.id}
         handleInputChange={props.handleInputChange}
         handleSubmit={props.handleSubmit}
-        currentPrediction={props.currentPrediction}
+        prediction={props.prediction}
         handleDelete={props.handleDelete}
         edit={props.edit} />
     </Modal>

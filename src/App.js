@@ -148,7 +148,7 @@ export class App extends React.Component {
               <button onClick={() => this.handleAddNew()}>Add new Prediction</button>
               <EditPrediction
                 showModal={this.state.adding}
-                currentPrediction={this.state.currentPrediction}
+                prediction={this.state.currentPrediction}
                 handleCloseModal={this.handleCloseModal}
                 handleInputChange={this.handleInputChangeOnAdd}
                 handleSubmit={this.handleSubmitAdd}
@@ -169,7 +169,7 @@ export class App extends React.Component {
               <EditPrediction
                 showModal={this.state.editing !== null}
                 id={this.state.editing}
-                currentPrediction={this.state.editingPrediction}
+                prediction={this.state.editingPrediction}
                 handleCloseModal={this.handleCloseModal}
                 handleInputChange={this.handleInputChangeOnUpdate}
                 handleSubmit={this.handleSubmitUpdate}

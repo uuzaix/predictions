@@ -10,7 +10,7 @@ export const PredictionForm = (props) => (
         type="text"
         name="title"
         onChange={props.handleInputChange}
-        value={props.currentPrediction.title}
+        value={props.prediction.title}
         placeholder="It will rain tomorrow"
         required />
     </div>
@@ -18,9 +18,14 @@ export const PredictionForm = (props) => (
       <div className="probability-select">
         {
           R.map(val => {
-            const applyClassProb = props.currentPrediction.prob === val ? "prob selected" : "prob";
+            const applyClassProb = props.prediction.prob === val ? "prob selected" : "prob";
             return (
-              <div id={"prob" + val} className={applyClassProb} onClick={() => props.handleInputChange({ target: { name: 'prob', value: val } })}>{val + '%'}</div>
+              <div
+                id={"prob" + val}
+                className={"pointer " + applyClassProb}
+                onClick={() => props.handleInputChange({ target: { name: 'prob', value: val } })}>
+                {val + '%'}
+              </div>
             )
           },
             ["50", "60", "70", "80", "90", "95", "97", "99"]
@@ -30,9 +35,14 @@ export const PredictionForm = (props) => (
       <div className="correct-select">
         {
           R.map(val => {
-            const applyClass = props.currentPrediction.correct === val ? "correctness selected" : "corectness";
+            const applyClass = props.prediction.correct === val ? "correctness selected" : "corectness";
             return (
-              <div id={val} className={applyClass} onClick={() => props.handleInputChange({ target: { name: 'correct', value: val } })}>{val}</div>
+              <div
+                id={val}
+                className={"pointer " + applyClass}
+                onClick={() => props.handleInputChange({ target: { name: 'correct', value: val } })}>
+                {val}
+              </div>
             )
           },
             ["unknown", "correct", "incorrect"]
