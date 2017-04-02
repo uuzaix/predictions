@@ -145,7 +145,7 @@ export class App extends React.Component {
                 handleSubmit={this.handleSubmit}
                 currentPrediction={this.state.currentPrediction}
                 edit={false} />*/}
-              <button onClick={() => this.handleAddNew()}>Add new Prediction</button>
+              <button className="badge btn-add" onClick={() => this.handleAddNew()}>Add new Prediction</button>
               <EditPrediction
                 showModal={this.state.adding}
                 prediction={this.state.currentPrediction}

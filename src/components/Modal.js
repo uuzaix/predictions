@@ -11,7 +11,7 @@ export const EditPrediction = (props) => (
       onRequestClose={props.handleCloseModal}
       shouldCloseOnOverlayClick={true}
     >
-      <button onClick={props.handleCloseModal}>Close Modal</button>
+      <button className="badge btn-close" onClick={props.handleCloseModal}>Close Modal</button>
       <PredictionForm
         id={props.id}
         handleInputChange={props.handleInputChange}

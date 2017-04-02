@@ -21,7 +21,7 @@ table {
 }
 
 #root {
-    background-color: #e0dedc;
+    background-color: #FFF;
     position: relative;
     height: auto;
     min-height: 100%;
@@ -36,28 +36,29 @@ table {
     border-radius: 0.3em;
     padding-right: 0px;
     overflow: hidden;
-    margin-bottom: .5em;
+    margin-bottom: .8em;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: white;
+    background-color: #E1F5FE;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 
 .card.incorrect {
-    border-left: 8px solid #AF1C1C;
+    border-left: 8px solid #EC407A;
 }
 .card.correct {
-    border-left: 8px solid #31A2C2;
+    border-left: 8px solid #00B0FF;
 }
 .card.unknown {
     border-left: 8px solid white;
 }
 .correctness.selected {
-    background-color: red;
+    background-color: #00B0FF;
 }
 
 .prob.selected {
-    background-color: red;
+    background-color: #00B0FF;
 }
 
 .card-title {
@@ -66,12 +67,11 @@ table {
 }
 
 .badge {
-    background-color: #6e6b6b;
+    background-color: #80D8FF;
     padding: 0.5em;
     border: none;
     outline: none;
     display: flex;
-    color: white;
 }
 
 .probability {
@@ -97,14 +97,14 @@ table {
     justify-content: space-between;
 }
 
-.btn-save-card {
+.btn-save-card, .btn-add {
     border-radius: 0.3em;
-    background-color: #31A2C2;
+    background-color: #00B0FF;
 }
 
-.btn-delete-card {
+.btn-delete-card, .btn-close {
     border-radius: 0.3em;
-    background-color: #AF1C1C;
+    background-color: #EC407A;
 }
 
 button:focus.bage, button:active.bage {
@@ -138,7 +138,7 @@ button:focus.bage, button:active.bage {
 }
 
 .btn-logout {
-    background-color: #2F2F28;
+    background-color: #0091EA;
     color: white;
     border: none;
 }
@@ -159,7 +159,7 @@ button:focus.bage, button:active.bage {
     width:100%;
     display: flex;
     justify-content: center;
-    background-color: #2F2F28;
+    background-color: #0091EA;
 }
 
 .text-center {
