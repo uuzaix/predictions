@@ -10,15 +10,18 @@ export const EditPrediction = (props) => (
       contentLabel="Edit Prediction"
       onRequestClose={props.handleCloseModal}
       shouldCloseOnOverlayClick={true}
+      style={{ content: { padding: "10px"} }}
     >
-      <button className="badge btn-close" onClick={props.handleCloseModal}>Close Modal</button>
-      <PredictionForm
-        id={props.id}
-        handleInputChange={props.handleInputChange}
-        handleSubmit={props.handleSubmit}
-        prediction={props.prediction}
-        handleDelete={props.handleDelete}
-        edit={props.edit} />
+      <div className="flex-column">
+        <button className="badge btn-close" onClick={props.handleCloseModal}><i className="fa fa-times fa-2x" aria-hidden="true"></i></button>
+        <PredictionForm
+          id={props.id}
+          handleInputChange={props.handleInputChange}
+          handleSubmit={props.handleSubmit}
+          prediction={props.prediction}
+          handleDelete={props.handleDelete}
+          edit={props.edit} />
+      </div>
     </Modal>
   </div>
 );

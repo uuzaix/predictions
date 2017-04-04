@@ -15,7 +15,7 @@ export const PredictionForm = (props) => (
         required />
     </div>
     <div className="card-parameters">
-      <div className="probability-select">
+      <div className="flex-column">
         {
           R.map(val => {
             const applyClassProb = props.prediction.prob === val ? "prob selected" : "prob";
@@ -32,7 +32,7 @@ export const PredictionForm = (props) => (
           )
         }
       </div>
-      <div className="correct-select">
+      <div className="flex-column">
         {
           R.map(val => {
             const applyClass = props.prediction.correct === val ? "correctness selected" : "corectness";
