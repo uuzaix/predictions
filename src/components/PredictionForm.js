@@ -3,12 +3,13 @@ import R from 'ramda';
 import { DeleteButton } from './buttons';
 
 export const PredictionForm = (props) => (
-  <form className="card card-form" onSubmit={props.handleSubmit}>
+  <form className="card-form" onSubmit={props.handleSubmit}>
     <div className="card-title">
       <textarea
         className="input"
         type="text"
         name="title"
+        rows="3"
         onChange={props.handleInputChange}
         value={props.prediction.title}
         placeholder="It will rain tomorrow"
@@ -35,7 +36,7 @@ export const PredictionForm = (props) => (
       <div className="flex-column">
         {
           R.map(val => {
-            const applyClass = props.prediction.correct === val ? "correctness selected" : "corectness";
+            const applyClass = props.prediction.correct === val ? "correctness selected" : "correctness";
             return (
               <div
                 id={val}
@@ -49,11 +50,11 @@ export const PredictionForm = (props) => (
           )
         }
       </div>
-      <button type='submit' className="badge btn-save-card"><i className="fa fa-check-square-o fa-lg" aria-hidden="true"></i></button>
 
     </div>
-    <div className="card-delete">
+    <div className="buttons">
       {props.edit && <DeleteButton id={props.id} handleDelete={props.handleDelete} />}
+      <button type='submit' className="badge btn-save-card"><i className="fa fa-check-square-o fa-lg" aria-hidden="true"></i></button>
     </div>
   </form >
 )

@@ -51,19 +51,33 @@ table {
     border-left: 8px solid #00B0FF;
 }
 .card.unknown {
-    border-left: 8px solid white;
+    border-left: 8px solid #E1F5FE;
 }
 .correctness.selected {
-    background-color: #00B0FF;
+    border: solid 2px #00B0FF;
+    border-radius: 0.3em;
+}
+
+.prob {
+    padding: 0.2em;
+}
+
+.correctness {
+    padding: 0.2em;
 }
 
 .prob.selected {
-    background-color: #00B0FF;
+    border: solid 2px #00B0FF;
+    border-radius: 0.3em;
 }
 
 .card-title {
     flex: 1;
     margin: 0.7em;
+}
+
+.card-form .card-title {
+    margin:  0 0.7em 0.7em 0.7em;
 }
 
 .badge {
@@ -94,7 +108,7 @@ table {
 .card-parameters {
     display:flex;
     align-self: stretch;
-    justify-content: space-between;
+    justify-content: space-around;
 }
 
 .btn-save-card, .btn-add {
@@ -103,9 +117,20 @@ table {
     align-self: center;
 }
 
+.btn-save-card {
+    flex: 1 0;
+    margin: 1em;
+}
+
+.btn-add {
+    margin: 1em auto;
+}
+
 .btn-delete-card {
     border-radius: 0.3em;
     background-color: #EC407A;
+    flex: 1 0;
+    margin: 1em;
 }
 
 .btn-close {
@@ -173,25 +198,25 @@ button:focus.bage, button:active.bage {
 .text-center {
     text-align: center;
 }
+
 .title {
     flex: 85%;
     color: white;
     font-weight: bold;
-    margin:0.4em;
+    margin: 0.4em;
 }
 
 .card-form {
     background-color: white;
-    margin-top: 10px;
     flex-direction: column;
     align-items: stretch;
-    padding: 10px;
+    margin: 0.4em;
+    font-size: 1.8em;
 }
 
 .recharts-wrapper {
     background-color: white;
 }
-
 
 input, select {
     border-radius: 0.3em;
@@ -199,10 +224,10 @@ input, select {
     padding: 0.2em;
 }
 
-.card-delete {
-    margin-left: 0.8em;
-    margin-right: 0.8em;
+.buttons {
+    margin: 0 0.8em;
     align-self: center;
+    display: flex;
 }
 
 .card-change {
@@ -211,15 +236,9 @@ input, select {
     align-items: center;
 }
 
-/*.probability-select {
-    display: flex;
-    flex-direction: column;
+i {
+    margin: auto;
 }
-
-.correct-select {
-    display: flex;
-    flex-direction: column;
-}*/
 
 .flex-column {
     display: flex;
@@ -246,6 +265,9 @@ button {
     /*.card-form {
         flex-direction: row;
     }*/
+    .card-form{
+        font-size: 1em;
+    }
     .card-form .card-title {
         margin-top: 2em;
         margin-bottom: 2em;
