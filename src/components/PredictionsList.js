@@ -3,23 +3,10 @@ import R from 'ramda';
 
 import { Prediction } from './Prediction'
 import { PredictionForm } from './PredictionForm'
-import ClickListner from './clickListener'
 
 const renderPredictions = (props, filter) => R.compose(
   R.map(
     ([i, { title, date, prob, correct }]) =>
-      /*props.editing === i ?
-        <ClickListner onClickOutside={props.onClickOutside} >
-          <PredictionForm
-            key={i}
-            id={i}
-            handleInputChange={props.handleUpdate}
-            handleSubmit={props.handleUpdateSubmit}
-            currentPrediction={props.editingPrediction}
-            handleDelete={props.handleDelete}
-            edit={true} />
-        </ClickListner>
-        :*/
         <Prediction
           key={i}
           id={i}

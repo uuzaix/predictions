@@ -76,10 +76,6 @@ table {
     margin: 0.7em;
 }
 
-.card-form .card-title {
-    margin:  0 0.7em 0.7em 0.7em;
-}
-
 .badge {
     background-color: #80D8FF;
     padding: 0.5em;
@@ -137,7 +133,7 @@ table {
     border-radius: 0.3em;
     color: #EC407A;
     background-color: #FFF;
-    align-self: flex-end;
+    align-self: flex-start;
 }
 
 button:focus.bage, button:active.bage {

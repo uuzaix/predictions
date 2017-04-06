@@ -7,17 +7,15 @@ import { Header } from './components/Header';
 import { PredictionsList } from './components/PredictionsList';
 import { PredictionForm } from './components/PredictionForm';
 import { Statistic } from './components/Statistic';
-import { EditPrediction } from './components/Modal';
+import { EditPrediction } from './components/EditPrediction';
 
 
 export class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      auth: false,
-      loading: true,
+      view: "load",
       showTable: true,
-      adding: false,
       currentPrediction: {
         title: '', prob: '50', correct: 'unknown'
       },
@@ -30,7 +28,6 @@ export class App extends React.Component {
     this.handleInputChangeOnUpdate = this.handleInputChangeOnUpdate.bind(this);
     this.handleSubmitUpdate = this.handleSubmitUpdate.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
-    this.onClickOutside = this.onClickOutside.bind(this);
     this.handleStatClick = this.handleStatClick.bind(this);
     this.handleAddNew = this.handleAddNew.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
@@ -40,24 +37,20 @@ export class App extends React.Component {
   componentDidMount() {
     firebaseAuth.onAuthStateChanged(user => {
       if (user) {
-        this.setState({ auth: true, loading: false });
+        this.setState({ view: "main" });
         database.ref('users/' + user.uid).on('value', snapshot => {
           snapshot.val() !== null ?
             this.setState({ predictions: snapshot.val().predictions }) :
             this.setState({ predictions: {} })
         })
       } else {
-        this.setState({ auth: false, loading: false })
+        this.setState({ view: "auth" })
       }
     });
   }
 
-  onClickOutside() {
-    this.setState({ editing: null, editingPrediction: {} })
-  }
-
   handleAddNew() {
-    this.setState({ adding: true })
+    this.setState({ view: "add" })
   }
 
   handleInputChangeOnAdd(evt) {
@@ -80,7 +73,7 @@ export class App extends React.Component {
     const date = new Date().getTime();
     const newPrediction = Object.assign({}, this.state.currentPrediction, { date })
     database.ref().update({ [path + '/' + newPredKey]: newPrediction });
-    this.setState({ adding: false, currentPrediction: { title: '', prob: '50', correct: 'unknown' } })
+    this.setState({ view: "main", currentPrediction: { title: '', prob: '50', correct: 'unknown' } })
   }
 
   handleInputChangeOnUpdate(evt) {
@@ -95,17 +88,17 @@ export class App extends React.Component {
     evt.preventDefault();
     const path = 'users/' + firebaseAuth.currentUser.uid + '/predictions/' + this.state.editing;
     database.ref().update({ [path]: this.state.editingPrediction });
-    this.setState({ editing: null, editingPrediction: {} })
+    this.setState({ view: "main", editing: null, editingPrediction: {} })
   }
 
   handleDelete(key) {
     const path = 'users/' + firebaseAuth.currentUser.uid + '/predictions/' + key;
     database.ref().child(path).remove();
-    this.setState({ editing: null, editingPrediction: {} })
+    this.setState({ view: "main", editing: null, editingPrediction: {} })
   }
 
   handleEdit(key) {
-    this.setState({ editing: key, editingPrediction: this.state.predictions[key] })
+    this.setState({ view: "edit", editing: key, editingPrediction: this.state.predictions[key] })
   }
 
   handleStatClick() {
@@ -113,7 +106,7 @@ export class App extends React.Component {
   }
 
   handleCloseModal() {
-    this.setState({ editing: null, editingPrediction: {}, adding: false, currentPrediction: { title: '', prob: '50', correct: 'unknown' } })
+    this.setState({ view: "main", editing: null, editingPrediction: {}, currentPrediction: { title: '', prob: '50', correct: 'unknown' } })
   }
 
   login(provider) {
@@ -133,51 +126,50 @@ export class App extends React.Component {
   }
 
   render() {
-    return (
-      this.state.loading ?
-        <div>Loading...</div> :
-        this.state.auth ?
-          <div>
-            <Header logout={this.logout} />
-            <div className="container">
-              {/*<PredictionForm
-                handleInputChange={this.handleInputChange}
-                handleSubmit={this.handleSubmit}
-                currentPrediction={this.state.currentPrediction}
-                edit={false} />*/}
-              <button className="badge btn-add" onClick={() => this.handleAddNew()}>Add new Prediction</button>
-              <EditPrediction
-                showModal={this.state.adding}
-                prediction={this.state.currentPrediction}
-                handleCloseModal={this.handleCloseModal}
-                handleInputChange={this.handleInputChangeOnAdd}
-                handleSubmit={this.handleSubmitAdd}
-                edit={false} />
-              <PredictionsList
-                predictions={this.state.predictions}
-                handleDelete={this.handleDelete}
-                editing={this.state.editing}
-                handleUpdate={this.handleUpdate}
-                handleUpdateSubmit={this.handleUpdateSubmit}
-                handleEdit={this.handleEdit}
-                onClickOutside={this.onClickOutside}
-                editingPrediction={this.state.editingPrediction} />
-              <Statistic
-                predictions={this.state.predictions}
-                showTable={this.state.showTable}
-                handleStatClick={this.handleStatClick} />
-              <EditPrediction
-                showModal={this.state.editing !== null}
-                id={this.state.editing}
-                prediction={this.state.editingPrediction}
-                handleCloseModal={this.handleCloseModal}
-                handleInputChange={this.handleInputChangeOnUpdate}
-                handleSubmit={this.handleSubmitUpdate}
-                handleDelete={this.handleDelete}
-                edit={true} />
-            </div>
-          </div> :
-          <Login login={this.login} />
-    )
+    switch (this.state.view) {
+      case "load":
+        return <div>Loading...</div>
+
+      case "auth":
+        return <Login login={this.login} />
+
+      case "main":
+        return <div>
+          <Header logout={this.logout} />
+          <div className="container">
+            <button className="badge btn-add" onClick={() => this.handleAddNew()}>Add new Prediction</button>
+            <PredictionsList
+              predictions={this.state.predictions}
+              handleDelete={this.handleDelete}
+              editing={this.state.editing}
+              handleUpdate={this.handleUpdate}
+              handleUpdateSubmit={this.handleUpdateSubmit}
+              handleEdit={this.handleEdit}
+              editingPrediction={this.state.editingPrediction} />
+            <Statistic
+              predictions={this.state.predictions}
+              showTable={this.state.showTable}
+              handleStatClick={this.handleStatClick} />
+          </div>
+        </div>
+
+      case "add":
+        return <EditPrediction
+          prediction={this.state.currentPrediction}
+          handleCloseModal={this.handleCloseModal}
+          handleInputChange={this.handleInputChangeOnAdd}
+          handleSubmit={this.handleSubmitAdd}
+          edit={false} />
+
+      case "edit":
+        return <EditPrediction
+          id={this.state.editing}
+          prediction={this.state.editingPrediction}
+          handleCloseModal={this.handleCloseModal}
+          handleInputChange={this.handleInputChangeOnUpdate}
+          handleSubmit={this.handleSubmitUpdate}
+          handleDelete={this.handleDelete}
+          edit={true} />
+    }
   }
 }
