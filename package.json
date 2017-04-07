@@ -1,7 +1,7 @@
 {
   "name": "predictions",
   "version": "1.0.0",
-  "description": "",
+  "description": "https://predictions-3205d.firebaseapp.com/",
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --inline",
