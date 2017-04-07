@@ -41,7 +41,7 @@ table {
     justify-content: space-between;
     align-items: center;
     background-color: #E1F5FE;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
 
 .card.incorrect {
@@ -119,7 +119,16 @@ table {
 }
 
 .btn-add {
-    margin: 1em auto;
+    bottom: 5%;
+    position: fixed;
+    right: 4.5em;
+    border-radius: 50%;
+    color: #fff;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.icon-background{
+    color: #00B0FF;
 }
 
 .btn-delete-card {
@@ -189,6 +198,8 @@ button:focus.bage, button:active.bage {
     display: flex;
     justify-content: center;
     background-color: #0091EA;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    margin-bottom: 1.5em; 
 }
 
 .text-center {
@@ -271,11 +282,17 @@ button {
     .card-change select, .card-change button {
         margin: 0.3em;
     }
+    .btn-add {
+        right: 9em;
+    }
 }
 
 @media (min-width: 1000px) {
     .container {
         margin: auto;
         max-width: 700px;
+    }
+    .btn-add {
+        right: calc(50% - 280px)
     }
 }

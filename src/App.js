@@ -137,7 +137,12 @@ export class App extends React.Component {
         return <div>
           <Header logout={this.logout} />
           <div className="container">
-            <button className="badge btn-add" onClick={() => this.handleAddNew()}>Add new Prediction</button>
+            <div className="btn-add pointer" onClick={() => this.handleAddNew()}>
+              <span className="fa-stack fa-2x">
+                <i className="fa fa-circle fa-stack-2x icon-background"></i>
+                <i className="fa fa-plus fa-stack-1x"></i>
+              </span>
+            </div>
             <PredictionsList
               predictions={this.state.predictions}
               handleDelete={this.handleDelete}
@@ -153,23 +158,34 @@ export class App extends React.Component {
           </div>
         </div>
 
+
       case "add":
-        return <EditPrediction
-          prediction={this.state.currentPrediction}
-          handleCloseModal={this.handleCloseModal}
-          handleInputChange={this.handleInputChangeOnAdd}
-          handleSubmit={this.handleSubmitAdd}
-          edit={false} />
+        return <div>
+          <Header logout={this.logout} />
+          <div className="container">
+            <EditPrediction
+              prediction={this.state.currentPrediction}
+              handleCloseModal={this.handleCloseModal}
+              handleInputChange={this.handleInputChangeOnAdd}
+              handleSubmit={this.handleSubmitAdd}
+              edit={false} />
+          </div>
+        </div>
 
       case "edit":
-        return <EditPrediction
-          id={this.state.editing}
-          prediction={this.state.editingPrediction}
-          handleCloseModal={this.handleCloseModal}
-          handleInputChange={this.handleInputChangeOnUpdate}
-          handleSubmit={this.handleSubmitUpdate}
-          handleDelete={this.handleDelete}
-          edit={true} />
+        return <div>
+          <Header logout={this.logout} />
+          <div className="container">
+            <EditPrediction
+              id={this.state.editing}
+              prediction={this.state.editingPrediction}
+              handleCloseModal={this.handleCloseModal}
+              handleInputChange={this.handleInputChangeOnUpdate}
+              handleSubmit={this.handleSubmitUpdate}
+              handleDelete={this.handleDelete}
+              edit={true} />
+          </div>
+        </div>
     }
   }
 }
