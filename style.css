@@ -150,10 +150,11 @@ table {
 }
 
 .btn-close {
-    border-radius: 0.3em;
+    /*border-radius: 0.3em;*/
     color: #EC407A;
     background-color: #FFF;
     align-self: flex-start;
+    margin: 1em;
 }
 
 button:focus.bage, button:active.bage {

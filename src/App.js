@@ -161,7 +161,7 @@ export class App extends React.Component {
 
       case "add":
         return <div>
-          <Header logout={this.logout} />
+          {/*<Header logout={this.logout} />*/}
           <div className="container">
             <EditPrediction
               prediction={this.state.currentPrediction}
@@ -174,7 +174,7 @@ export class App extends React.Component {
 
       case "edit":
         return <div>
-          <Header logout={this.logout} />
+          {/*<Header logout={this.logout} />*/}
           <div className="container">
             <EditPrediction
               id={this.state.editing}

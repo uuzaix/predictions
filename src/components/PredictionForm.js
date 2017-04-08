@@ -22,6 +22,7 @@ export const PredictionForm = (props) => (
             const applyClassProb = props.prediction.prob === val ? "value selected" : "value";
             return (
               <div
+                key={val}
                 id={"prob" + val}
                 className={"pointer " + applyClassProb}
                 onClick={() => props.handleInputChange({ target: { name: 'prob', value: val } })}>
@@ -39,6 +40,7 @@ export const PredictionForm = (props) => (
             const applyClass = props.prediction.correct === val ? "value selected" : "value";
             return (
               <div
+                key={val}
                 id={val}
                 className={"pointer " + applyClass}
                 onClick={() => props.handleInputChange({ target: { name: 'correct', value: val } })}>
