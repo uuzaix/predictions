@@ -1,8 +1,12 @@
 import React from 'react';
 import { LogOutButton } from './buttons';
 
-export const Header = ({ logout, text }) =>
+export const Header = (props) =>
   <div className="header">
-    <h1 className="title text-center">{text}</h1>
-    <LogOutButton logout={logout} />
+    {props.main
+      ? <LogOutButton logout={props.logout} />
+      : <button className="badge btn-close" onClick={props.handleCloseEdit}><i className="fa fa-arrow-left fa-2x" aria-hidden="true"></i></button>
+    }
+    <h1 className="title text-center">{props.text}</h1>
+
   </div>

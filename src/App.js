@@ -7,7 +7,6 @@ import { Header } from './components/Header';
 import { PredictionsList } from './components/PredictionsList';
 import { PredictionForm } from './components/PredictionForm';
 import { Statistic } from './components/Statistic';
-import { EditPrediction } from './components/EditPrediction';
 
 
 export class App extends React.Component {
@@ -31,7 +30,7 @@ export class App extends React.Component {
     this.handleStatClick = this.handleStatClick.bind(this);
     this.handleAddNew = this.handleAddNew.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
-    this.handleCloseModal = this.handleCloseModal.bind(this);
+    this.handleCloseEdit = this.handleCloseEdit.bind(this);
   }
 
   componentDidMount() {
@@ -105,7 +104,7 @@ export class App extends React.Component {
     this.setState({ showTable: !this.state.showTable })
   }
 
-  handleCloseModal() {
+  handleCloseEdit() {
     this.setState({ view: "main", editing: null, editingPrediction: {}, currentPrediction: { title: '', prob: '50', correct: 'unknown' } })
   }
 
@@ -135,7 +134,7 @@ export class App extends React.Component {
 
       case "main":
         return <div>
-          <Header logout={this.logout} text="Predictions" />
+          <Header logout={this.logout} text="Predictions" main={true} />
           <div className="container">
             <div className="btn-add pointer" onClick={() => this.handleAddNew()}>
               <span className="fa-stack fa-2x">
@@ -161,11 +160,14 @@ export class App extends React.Component {
 
       case "add":
         return <div>
-          <Header logout={this.logout} text="Add prediction" />
+          <Header
+            logout={this.logout}
+            text="Add prediction"
+            main={false}
+            handleCloseEdit={this.handleCloseEdit} />
           <div className="container">
-            <EditPrediction
+            <PredictionForm
               prediction={this.state.currentPrediction}
-              handleCloseModal={this.handleCloseModal}
               handleInputChange={this.handleInputChangeOnAdd}
               handleSubmit={this.handleSubmitAdd}
               edit={false} />
@@ -174,12 +176,15 @@ export class App extends React.Component {
 
       case "edit":
         return <div>
-          <Header logout={this.logout} text="Edit prediction" />
+          <Header
+            logout={this.logout}
+            text="Edit prediction"
+            main={false}
+            handleCloseEdit={this.handleCloseEdit} />
           <div className="container">
-            <EditPrediction
+            <PredictionForm
               id={this.state.editing}
               prediction={this.state.editingPrediction}
-              handleCloseModal={this.handleCloseModal}
               handleInputChange={this.handleInputChangeOnUpdate}
               handleSubmit={this.handleSubmitUpdate}
               handleDelete={this.handleDelete}

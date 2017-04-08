@@ -114,7 +114,7 @@ table {
     justify-content: space-around;
 }
 
-.btn-save-card, .btn-add {
+.btn-save-card {
     border-radius: 0.3em;
     background-color: #00B0FF;
     align-self: center;
@@ -129,15 +129,18 @@ table {
 
 .btn-add {
     position: fixed;
+    align-self: center;
+    border-radius: 0.3em;
     bottom: 2.5em;
     right: 2.5em;
     border-radius: 50%;
     color: #fff;
+    background-color: #EC407A;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 
 .icon-background{
-    color: #00B0FF;
+    color: #EC407A;
 }
 
 .btn-delete-card {
@@ -152,8 +155,8 @@ table {
 .btn-close {
     /*border-radius: 0.3em;*/
     color: #EC407A;
-    background-color: #FFF;
-    align-self: flex-start;
+    background-color: #0091EA;
+    /*align-self: flex-start;*/
 }
 
 button:focus.bage, button:active.bage {
@@ -191,6 +194,7 @@ button:focus.bage, button:active.bage {
     background-color: #0091EA;
     color: white;
     border: none;
+    order: 2;
 }
 
 .btn-login.Google {
