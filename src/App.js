@@ -135,7 +135,7 @@ export class App extends React.Component {
 
       case "main":
         return <div>
-          <Header logout={this.logout} />
+          <Header logout={this.logout} text="Predictions" />
           <div className="container">
             <div className="btn-add pointer" onClick={() => this.handleAddNew()}>
               <span className="fa-stack fa-2x">
@@ -161,7 +161,7 @@ export class App extends React.Component {
 
       case "add":
         return <div>
-          {/*<Header logout={this.logout} />*/}
+          <Header logout={this.logout} text="Add prediction" />
           <div className="container">
             <EditPrediction
               prediction={this.state.currentPrediction}
@@ -174,7 +174,7 @@ export class App extends React.Component {
 
       case "edit":
         return <div>
-          {/*<Header logout={this.logout} />*/}
+          <Header logout={this.logout} text="Edit prediction" />
           <div className="container">
             <EditPrediction
               id={this.state.editing}

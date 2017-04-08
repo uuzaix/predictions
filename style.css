@@ -128,9 +128,9 @@ table {
 }
 
 .btn-add {
-    bottom: 5%;
     position: fixed;
-    right: 4.5em;
+    bottom: 2.5em;
+    right: 2.5em;
     border-radius: 50%;
     color: #fff;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
@@ -154,7 +154,6 @@ table {
     color: #EC407A;
     background-color: #FFF;
     align-self: flex-start;
-    margin: 1em;
 }
 
 button:focus.bage, button:active.bage {
