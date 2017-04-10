@@ -13,7 +13,7 @@ export const PredictionsChart = ({ predictions }) => (
       <Tooltip labelFormatter={(label) => label + "% confidence level"} />
       <Legend verticalAlign="top" height={36} />
       <Line type="monotone" name="Your result" unit="%" dataKey="yours" stroke="#82ca9d" activeDot={{ r: 8 }} connectNulls={true} />
-      <Line name="Perfect calibration" unit="%" type="monotone" dataKey="perfect" stroke="#8884d8" />
+      <Line name="Perfect calibration" unit="%" type="monotone" dataKey="conf" stroke="#8884d8" />
     </LineChart>
   </ResponsiveContainer>
 )

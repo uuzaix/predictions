@@ -30,7 +30,9 @@ describe('groupByProb', () => {
     const predictions = { '1': { correct: "correct", prob: 50, title: "aaa" }, "2": { correct: "correct", prob: 60, title: "bbb" }, '3': { correct: "incorrect", prob: 60, title: "ccc" }, '4': { correct: "incorrect", prob: 60, title: "ddd" } };
     const result = groupByProb(predictions);
 
-    expect(result).to.be.deep.equal({ '50': '100.00', '60': '33.33' });
+    expect(result['50']).to.equal(100);
+    expect(result['60']).to.be.closeTo(33.33, 0.01);
+    expect(result).to.have.all.keys(['50', '60'])
   });
 
 });

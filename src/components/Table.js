@@ -6,12 +6,11 @@ import { groupByProb, calcTableStat, calcChartStat } from './statCalculations'
 export const Table = ({ predictions }) => {
   const data = calcChartStat(groupByProb(predictions));
   return (
-    <table>
+    <table className="stat">
       <thead>
         <tr>
-          <td>Probability</td >
-          <td>Perfect data</td >
-          <td>Correctness</td >
+          <td>Confidence, %</td >
+          <td>Correct predictions, %</td >
         </tr >
       </thead >
       <tbody>
@@ -19,8 +18,7 @@ export const Table = ({ predictions }) => {
           R.map(line => (
             <tr key={line.conf} >
               <td>{line.conf}</td >
-              <td>{line.perfect}</td >
-              <td>{line.yours}</td >
+              <td>{line.yours !== undefined ? line.yours.toFixed(0) : ''}</td >
             </tr >
           ), data)
         }

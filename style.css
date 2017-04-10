@@ -12,12 +12,18 @@ html, body {
 
 
 table, th, td {
-    border: 1px solid black;
+    border: 1px solid #ddd;
     border-collapse: collapse;
  }
 
 table {
     margin: 0 auto;
+    width: 100%;
+}
+
+table.stat td {
+  text-align: right;
+  padding: 0.5em;
 }
 
 #root {
