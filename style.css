@@ -150,10 +150,8 @@ table {
 }
 
 .btn-close {
-    /*border-radius: 0.3em;*/
-    color: #EC407A;
+    color: white;
     background-color: #0091EA;
-    /*align-self: flex-start;*/
 }
 
 button:focus.bage, button:active.bage {
@@ -216,7 +214,7 @@ button:focus.bage, button:active.bage {
     justify-content: center;
     background-color: #0091EA;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-    margin-bottom: 1.5em; 
+    margin-bottom: 1.5em;
 }
 
 .text-center {
@@ -235,7 +233,7 @@ button:focus.bage, button:active.bage {
     flex-direction: column;
     align-items: stretch;
     margin: 0.4em;
-    font-size: 1.6em;
+    font-size: 1.3em;
 }
 
 .recharts-wrapper {
