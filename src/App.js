@@ -155,6 +155,7 @@ export class App extends React.Component {
               showTable={this.state.showTable}
               handleStatClick={this.handleStatClick} />
           </div>
+          <div className="whitespace"></div>
         </div>
 
 
