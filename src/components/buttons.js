@@ -1,13 +1,13 @@
 import React from 'react';
 
-export const LoginButton = ({ login, provider, providerName }) => (
-  <button className={"btn-login " + providerName} onClick={() => login(provider)}>
-    {providerName === 'Google' ? <i className="fa fa-google  fa-lg" aria-hidden="true"></i> :
-      <i className="fa fa-github fa-lg" aria-hidden="true"></i>}
-    Login with {providerName}
-  </button>
-)
-
+export const LoginButton = ({ login, provider, providerName }) => {
+  return (
+    <button className={"btn-login " + providerName} onClick={() => login(provider)}>
+      <i className={"fa fa-" + providerName.toLowerCase() + " fa-lg"} aria-hidden="true"></i>
+      Login with {providerName}
+    </button>
+  )
+}
 export const LogOutButton = ({ logout }) => (
   <button className="btn-logout" onClick={() => logout()}>
     <i className="fa fa-sign-out fa-2x" aria-hidden="true"></i>
