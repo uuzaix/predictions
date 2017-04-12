@@ -14,3 +14,4 @@ export const firebaseAuth = firebaseApp.auth()
 export const database = firebaseApp.database();
 export const providerGithub = new firebase.auth.GithubAuthProvider();
 export const providerGoogle = new firebase.auth.GoogleAuthProvider();
+export const providerTwitter = new firebase.auth.TwitterAuthProvider();
