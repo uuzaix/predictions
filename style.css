@@ -21,6 +21,10 @@ table {
     width: 100%;
 }
 
+textarea {
+    margin-top: 0.2em;
+}
+
 table.stat td {
   text-align: right;
   padding: 0.5em;
@@ -284,6 +288,12 @@ button {
 .whitespace {
     height: 8em;
 }
+.whitespace-right {
+    margin-right: 3em;
+}
+.whitespace-left {
+    margin-left: 3em;
+}
 
 @media (min-width: 700px) {
     .container {
@@ -309,6 +319,18 @@ button {
     .btn-add {
         right: 9em;
     }
+    .btn-close {
+        margin-left: 5.5em;
+    }
+    .whitespace-right {
+        margin-right: 7em;
+    }
+    .btn-logout {
+        margin-right: 5em;
+    }
+    .whitespace-left {
+        margin-left: 7em;
+    }
 }
 
 @media (min-width: 1000px) {
@@ -318,5 +340,17 @@ button {
     }
     .btn-add {
         right: calc(50% - 280px)
+    }
+    .btn-close {
+        margin-left: calc(50% - 330px);
+    }
+    .whitespace-right {
+        margin-right: calc(50% - 300px);
+    }
+    .btn-logout {
+        margin-right: calc(50% - 350px);
+    }
+    .whitespace-left {
+        margin-left: calc(50% - 320px);
     }
 }
