@@ -144,6 +144,7 @@ table.stat td {
     color: #fff;
     background-color: #EC407A;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    z-index: 3;
 }
 
 .icon-background{

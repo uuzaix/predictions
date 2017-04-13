@@ -7,6 +7,7 @@ import { Header } from './components/Header';
 import { PredictionsList } from './components/PredictionsList';
 import { PredictionForm } from './components/PredictionForm';
 import { Statistic } from './components/Statistic';
+import { SignUpForm } from './components/SignUpForm';
 
 
 export class App extends React.Component {
@@ -31,6 +32,8 @@ export class App extends React.Component {
     this.handleAddNew = this.handleAddNew.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.handleCloseEdit = this.handleCloseEdit.bind(this);
+    this.handleLogIn = this.handleLogIn.bind(this);
+    this.handleSignUp = this.handleSignUp.bind(this);
   }
 
   componentDidMount() {
@@ -105,7 +108,30 @@ export class App extends React.Component {
   }
 
   handleCloseEdit() {
-    this.setState({ view: "main", editing: null, editingPrediction: {}, currentPrediction: { title: '', prob: '50', correct: 'unknown' } })
+  }
+
+  handleSignUp() {
+    this.setState({ view: "signUp" })
+
+  }
+
+  handleLogIn() {
+    this.setState({ view: "logIn" })
+
+  }
+
+  signUp(email, password) {
+    firebaseAuth.createUserWithEmailAndPassword(email, password).catch(function (error) {
+      const errorMessage = error.message;
+      console.log(errorMessage);
+    });
+  }
+
+  loginWithEmail(email, password) {
+    firebaseAuth.signInWithEmailAndPassword(email, password).catch(function (error) {
+      const errorMessage = error.message;
+      console.log(errorMessage);
+    });
   }
 
   login(provider) {
@@ -130,7 +156,13 @@ export class App extends React.Component {
         return <div>Loading...</div>
 
       case "auth":
-        return <Login login={this.login} />
+        return <Login login={this.login} handleSignUp={this.handleSignUp} handleLogIn={this.handleLogIn} />
+
+      case "signUp":
+        return <SignUpForm handleSignUp={this.signUp} view="Sign Up" />
+
+      case "logIn":
+        return <SignUpForm handleSignUp={this.loginWithEmail} view="Log In" />
 
       case "main":
         return <div>
