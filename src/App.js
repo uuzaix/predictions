@@ -108,6 +108,7 @@ export class App extends React.Component {
   }
 
   handleCloseEdit() {
+    this.setState({ view: "main", editing: null, editingPrediction: {}, currentPrediction: { title: '', prob: '50', correct: 'unknown' } })
   }
 
   handleSignUp() {
