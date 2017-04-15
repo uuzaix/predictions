@@ -8,6 +8,23 @@ export const LoginButton = ({ login, provider, providerName }) => {
     </button>
   )
 }
+export const SignUpButton = ({ handleSignUp }) => {
+  return (
+    <button className="btn-login" onClick={() => handleSignUp()}>
+      <i className={"fa fa-envelope fa-lg"} aria-hidden="true"></i>
+      Sign Up with email
+    </button>
+  )
+}
+export const EmailLoginButton = ({ handleLogIn }) => {
+  return (
+    <button className="btn-login" onClick={() => handleLogIn()}>
+      <i className={"fa fa-sign-in fa-lg"} aria-hidden="true"></i>
+      Login with email
+    </button>
+  )
+}
+
 export const LogOutButton = ({ logout }) => (
   <button className="btn-logout" onClick={() => logout()}>
     <i className="fa fa-sign-out fa-2x" aria-hidden="true"></i>

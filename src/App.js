@@ -21,7 +21,8 @@ export class App extends React.Component {
       },
       predictions: null,
       editing: null,
-      editingPrediction: {}
+      editingPrediction: {},
+      error: null
     }
     this.handleInputChangeOnAdd = this.handleInputChangeOnAdd.bind(this);
     this.handleSubmitAdd = this.handleSubmitAdd.bind(this);
@@ -34,12 +35,17 @@ export class App extends React.Component {
     this.handleCloseEdit = this.handleCloseEdit.bind(this);
     this.handleLogIn = this.handleLogIn.bind(this);
     this.handleSignUp = this.handleSignUp.bind(this);
+    this.signUp = this.signUp.bind(this);
+    this.loginWithEmail = this.loginWithEmail.bind(this);
+    this.login = this.login.bind(this);
+    this.logout = this.logout.bind(this);
+    this.handleBackToAuth = this.handleBackToAuth.bind(this);
   }
 
   componentDidMount() {
     firebaseAuth.onAuthStateChanged(user => {
       if (user) {
-        this.setState({ view: "main" });
+        this.setState({ view: "main", error: null });
         database.ref('users/' + user.uid).on('value', snapshot => {
           snapshot.val() !== null ?
             this.setState({ predictions: snapshot.val().predictions }) :
@@ -118,19 +124,25 @@ export class App extends React.Component {
 
   handleLogIn() {
     this.setState({ view: "logIn" })
-
   }
 
+  handleBackToAuth() {
+    this.setState({ view: "auth" })
+  }
+
+
   signUp(email, password) {
-    firebaseAuth.createUserWithEmailAndPassword(email, password).catch(function (error) {
+    firebaseAuth.createUserWithEmailAndPassword(email, password).catch(error => {
       const errorMessage = error.message;
+      this.setState({ error: errorMessage })
       console.log(errorMessage);
     });
   }
 
   loginWithEmail(email, password) {
-    firebaseAuth.signInWithEmailAndPassword(email, password).catch(function (error) {
+    firebaseAuth.signInWithEmailAndPassword(email, password).catch(error => {
       const errorMessage = error.message;
+      this.setState({ error: errorMessage })
       console.log(errorMessage);
     });
   }
@@ -140,6 +152,7 @@ export class App extends React.Component {
       const user = result.user;
     }).catch(function (error) {
       var errorMessage = error.message;
+      this.setState({ error: errorMessage })
       console.log(errorMessage)
     });
   }
@@ -147,6 +160,7 @@ export class App extends React.Component {
   logout() {
     firebaseAuth.signOut().then(function () {
     }, function (error) {
+      this.setState({ error: errorMessage })
       console.log(error)
     })
   }
@@ -157,13 +171,27 @@ export class App extends React.Component {
         return <div>Loading...</div>
 
       case "auth":
-        return <Login login={this.login} handleSignUp={this.handleSignUp} handleLogIn={this.handleLogIn} />
+        return <Login login={this.login} handleSignUp={this.handleSignUp} handleLogIn={this.handleLogIn} error={this.state.error} />
 
       case "signUp":
-        return <SignUpForm handleSignUp={this.signUp} view="Sign Up" />
+        return <div>
+          <Header
+            text="Predictions"
+            main={false}
+            handleCloseEdit={this.handleBackToAuth} />
+          <SignUpForm signUp={this.signUp} view="Sign Up" error={this.state.error} />
+        </div>
 
       case "logIn":
-        return <SignUpForm handleSignUp={this.loginWithEmail} view="Log In" />
+        return <div>
+          <Header
+            text="Predictions"
+            main={false}
+            handleCloseEdit={this.handleBackToAuth} />
+          <div className="container">
+            <SignUpForm signUp={this.loginWithEmail} view="Log In" error={this.state.error} />
+          </div>
+        </div>
 
       case "main":
         return <div>

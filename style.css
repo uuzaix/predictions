@@ -173,13 +173,16 @@ button:focus.bage, button:active.bage {
 .login {
     width: 100%;
     height: 100%;
-    display: flex;
     position: absolute;
+    background-color: #E1F5FE;
+    /*color: #FFF;*/
+}
+
+.container-middle {
+    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #E1F5FE;
-    /*color: #FFF;*/
 }
 
 .btn-login {
@@ -251,10 +254,11 @@ button:focus.bage, button:active.bage {
     background-color: white;
 }
 
-input, select {
+input {
     border-radius: 0.3em;
     font-size: 0.9em;
     padding: 0.2em;
+    margin-bottom:2em;
 }
 
 .buttons {
@@ -295,6 +299,12 @@ button {
 .whitespace-left {
     margin-left: 3em;
 }
+
+.error {
+    margin-top: 2em;
+    color: red;
+}
+
 
 @media (min-width: 700px) {
     .container {

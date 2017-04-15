@@ -17,26 +17,21 @@ export class SignUpForm extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.handleSignUp(this.state.email, this.state.password);
+    this.props.signUp(this.state.email, this.state.password);
+    this.setState({ password: '' })
   }
 
   render() {
     return (
-      <div className="login">
-        <h1 className="text-center">Predictions</h1>
+      <div className="container-middle">
         <h2 className="text-center">Work in progress</h2>
         <h2 className="text-center">{this.props.view}</h2>
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            Email:
-          <input type="text" name="email" value={this.state.email} onChange={this.handleChange} />
-          </label>
-          <label>
-            Password:
-          <input type="text" name="password" value={this.state.password} onChange={this.handleChange} />
-          </label>
-          <input type="submit" value="Submit" />
+        <form onSubmit={this.handleSubmit} className="flex-column">
+          <input type="text" name="email" value={this.state.email} size="35" onChange={this.handleChange} placeholder="your@email.com" />
+          <input type="password" name="password" value={this.state.password} size="25" onChange={this.handleChange} placeholder="password" />
+          <input type="submit" value="Submit" className="btn-login" />
         </form>
+        {this.props.error && <div className="error">Error: {this.props.error}</div>}
       </div>
     );
   }
