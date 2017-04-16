@@ -22,7 +22,7 @@ export class PredictionForm extends React.Component {
   }
   render() {
     return (
-      <form className="card-form" >
+      <form className="card-form" onSubmit={this.props.handleSubmit} >
         <div className="card-title">
           <textarea
             className="input"
@@ -75,7 +75,9 @@ export class PredictionForm extends React.Component {
         <div className="buttons">
           {this.props.edit &&
             <DeleteButton id={this.props.id} handleConfirmDelete={this.handleInitDelete} />}
-          <button onClick={this.props.handleSubmit} className="badge btn-save-card"><i className="fa fa-check-square-o fa-lg" aria-hidden="true"></i></button>
+          <button type="submit" className="badge btn-save-card">
+            <i className="fa fa-check-square-o fa-lg" aria-hidden="true"></i>
+          </button>
         </div>
         <Modal
           isOpen={this.state.deleting}
@@ -90,7 +92,9 @@ export class PredictionForm extends React.Component {
           </div>
           <div className="buttons">
             <DeleteButton id={this.props.id} handleConfirmDelete={this.props.handleConfirmDelete} />
-            <button className="badge btn-save-card" onClick={this.closeModal}><i className="fa fa-undo fa-lg" aria-hidden="true"></i></button>
+            <button className="badge btn-save-card" type="button" onClick={this.closeModal}>
+              <i className="fa fa-undo fa-lg" aria-hidden="true"></i>
+            </button>
           </div>
         </Modal>
       </form >
