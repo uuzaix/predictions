@@ -26,12 +26,12 @@ export class SignUpForm extends React.Component {
       <div className="container-middle">
         <h2 className="text-center">Work in progress</h2>
         <h2 className="text-center">{this.props.view}</h2>
+        {this.props.error && <div className="error text-center">Error: {this.props.error}</div>}
         <form onSubmit={this.handleSubmit} className="flex-column">
           <input type="text" name="email" value={this.state.email} size="35" onChange={this.handleChange} placeholder="your@email.com" />
           <input type="password" name="password" value={this.state.password} size="25" onChange={this.handleChange} placeholder="password" />
           <input type="submit" value="Submit" className="btn-login" />
         </form>
-        {this.props.error && <div className="error">Error: {this.props.error}</div>}
       </div>
     );
   }

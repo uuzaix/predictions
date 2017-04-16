@@ -175,6 +175,7 @@ button:focus.bage, button:active.bage {
     height: 100%;
     position: absolute;
     background-color: #E1F5FE;
+    display: flex;
     /*color: #FFF;*/
 }
 
@@ -301,7 +302,7 @@ button {
 }
 
 .error {
-    margin-top: 2em;
+    margin: 1.5em;
     color: red;
 }
 

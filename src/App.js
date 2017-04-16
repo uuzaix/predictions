@@ -118,16 +118,15 @@ export class App extends React.Component {
   }
 
   handleSignUp() {
-    this.setState({ view: "signUp" })
-
+    this.setState({ view: "signUp", error: null })
   }
 
   handleLogIn() {
-    this.setState({ view: "logIn" })
+    this.setState({ view: "logIn", error: null })
   }
 
   handleBackToAuth() {
-    this.setState({ view: "auth" })
+    this.setState({ view: "auth", error: null })
   }
 
 
@@ -150,7 +149,7 @@ export class App extends React.Component {
   login(provider) {
     firebaseAuth.signInWithPopup(provider).then(result => {
       const user = result.user;
-    }).catch(function (error) {
+    }).catch(error => {
       var errorMessage = error.message;
       this.setState({ error: errorMessage })
       console.log(errorMessage)
@@ -158,8 +157,8 @@ export class App extends React.Component {
   }
 
   logout() {
-    firebaseAuth.signOut().then(function () {
-    }, function (error) {
+    firebaseAuth.signOut().then(() => {
+    }, error => {
       this.setState({ error: errorMessage })
       console.log(error)
     })
