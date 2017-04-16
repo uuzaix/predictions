@@ -305,6 +305,20 @@ button {
     color: red;
 }
 
+.delete-modal {
+    position: absolute;
+    top: 40px;
+    left: 40px;
+    right: 40px;
+    bottom: 40px;
+    border: 1px solid #ccc;
+    background: #fff;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 4px;
+    outline: none;
+    padding: 2em;
+}
 
 @media (min-width: 700px) {
     .container {
@@ -342,6 +356,10 @@ button {
     .whitespace-left {
         margin-left: 7em;
     }
+    .delete-modal {
+    left: 6em;
+    right: 6em;
+    }
 }
 
 @media (min-width: 1000px) {
@@ -363,5 +381,9 @@ button {
     }
     .whitespace-left {
         margin-left: calc(50% - 320px);
+    }
+    .delete-modal {
+    left: calc(50% - 300px);
+    right: calc(50% - 300px);
     }
 }

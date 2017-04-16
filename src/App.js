@@ -31,7 +31,7 @@ export class App extends React.Component {
     this.handleEdit = this.handleEdit.bind(this);
     this.handleStatClick = this.handleStatClick.bind(this);
     this.handleAddNew = this.handleAddNew.bind(this);
-    this.handleDelete = this.handleDelete.bind(this);
+    this.handleConfirmDelete = this.handleConfirmDelete.bind(this);
     this.handleCloseEdit = this.handleCloseEdit.bind(this);
     this.handleLogIn = this.handleLogIn.bind(this);
     this.handleSignUp = this.handleSignUp.bind(this);
@@ -99,7 +99,7 @@ export class App extends React.Component {
     this.setState({ view: "main", editing: null, editingPrediction: {} })
   }
 
-  handleDelete(key) {
+  handleConfirmDelete(key) {
     const path = 'users/' + firebaseAuth.currentUser.uid + '/predictions/' + key;
     database.ref().child(path).remove();
     this.setState({ view: "main", editing: null, editingPrediction: {} })
@@ -205,7 +205,7 @@ export class App extends React.Component {
             </div>
             <PredictionsList
               predictions={this.state.predictions}
-              handleDelete={this.handleDelete}
+              handleConfirmDelete={this.handleConfirmDelete}
               editing={this.state.editing}
               handleUpdate={this.handleUpdate}
               handleUpdateSubmit={this.handleUpdateSubmit}
@@ -249,7 +249,7 @@ export class App extends React.Component {
               prediction={this.state.editingPrediction}
               handleInputChange={this.handleInputChangeOnUpdate}
               handleSubmit={this.handleSubmitUpdate}
-              handleDelete={this.handleDelete}
+              handleConfirmDelete={this.handleConfirmDelete}
               edit={true} />
           </div>
         </div>

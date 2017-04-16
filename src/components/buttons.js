@@ -32,7 +32,7 @@ export const LogOutButton = ({ logout }) => (
 )
 
 export const DeleteButton = (props) => (
-  <button type="button" className="badge btn-delete-card" onClick={() => props.handleDelete(props.id)}>
+  <button type="button" className="badge btn-delete-card" onClick={() => props.handleConfirmDelete(props.id)}>
     <i className="fa fa-trash fa-lg" aria-hidden="true"></i>
   </button>
 )
