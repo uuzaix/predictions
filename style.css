@@ -176,7 +176,7 @@ button:focus.bage, button:active.bage {
     position: absolute;
     background-color: #E1F5FE;
     display: flex;
-    /*color: #FFF;*/
+    justify-content: center;
 }
 
 .container-middle {
@@ -384,7 +384,7 @@ button {
         margin-left: calc(50% - 320px);
     }
     .delete-modal {
-    left: calc(50% - 300px);
-    right: calc(50% - 300px);
+        left: calc(50% - 300px);
+        right: calc(50% - 300px);
     }
 }
