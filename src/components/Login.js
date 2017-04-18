@@ -13,9 +13,9 @@ export const Login = ({ login, handleSignUp, handleLogIn, error }) =>
       <LoginButton login={login} provider={providerGithub} providerName="Github" />
       <LoginButton login={login} provider={providerGoogle} providerName="Google" />
       <LoginButton login={login} provider={providerTwitter} providerName="Twitter" />
-      <div>Work in progres...</div>
+      {/*<div>Work in progress...</div>
       <EmailLoginButton handleLogIn={handleLogIn} />
-      <SignUpButton handleSignUp={handleSignUp} />
+      <SignUpButton handleSignUp={handleSignUp} />*/}
       <Footer />
     </div>
   </div>
