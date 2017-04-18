@@ -8,6 +8,7 @@ import { PredictionsList } from './components/PredictionsList';
 import { PredictionForm } from './components/PredictionForm';
 import { Statistic } from './components/Statistic';
 import { SignUpForm } from './components/SignUpForm';
+import { Footer } from './components/Footer';
 
 
 export class App extends React.Component {
@@ -179,6 +180,7 @@ export class App extends React.Component {
             main={false}
             handleCloseEdit={this.handleBackToAuth} />
           <SignUpForm signUp={this.signUp} view="Sign Up" error={this.state.error} />
+          <Footer />
         </div>
 
       case "logIn":
@@ -190,6 +192,7 @@ export class App extends React.Component {
           <div className="container">
             <SignUpForm signUp={this.loginWithEmail} view="Log In" error={this.state.error} />
           </div>
+          <Footer />
         </div>
 
       case "main":
@@ -216,6 +219,7 @@ export class App extends React.Component {
               handleStatClick={this.handleStatClick} />
           </div>
           <div className="whitespace"></div>
+          <Footer />
         </div>
 
 

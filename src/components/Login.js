@@ -2,6 +2,7 @@ import React from 'react';
 
 import { providerGithub, providerGoogle, providerTwitter } from '../firebase';
 import { LoginButton, SignUpButton, EmailLoginButton } from './buttons';
+import { Footer } from './Footer';
 
 export const Login = ({ login, handleSignUp, handleLogIn, error }) =>
   <div className="login">
@@ -15,5 +16,6 @@ export const Login = ({ login, handleSignUp, handleLogIn, error }) =>
       <div>Work in progres...</div>
       <EmailLoginButton handleLogIn={handleLogIn} />
       <SignUpButton handleSignUp={handleSignUp} />
+      <Footer />
     </div>
   </div>
