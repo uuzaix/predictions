@@ -2,8 +2,9 @@
 
 [![Build Status](https://travis-ci.org/uuzaix/predictions.svg?branch=master)](https://travis-ci.org/uuzaix/predictions)
 
-This app aims to increase users estimation quality.  
-Users can save predictions with certain confidence level and mark their correctness. Provided statistics helps to calibrate estimations accuracy.
+**Keep track of your predictions and calibrate yourself**
+
+This app aims to increase quality of estimations made by users. Confidence level and correctness can be set for each prediction. Provided statistics helps users to calibrate their accuracy of estimatons.
 
 **See demo at**
 https://predictions-3205d.firebaseapp.com/
@@ -15,18 +16,18 @@ Read more about how you can train yourself to improve your estimation of possibi
 
 **Install**
 
-```bash
+```
 npm install
 ```
 
 **Usage**
 
 Build
-```bash
+```
 npm run build
 ```
 
 Run tests
-```bash
+```
 npm run test
 ```
