@@ -4,7 +4,7 @@ this.addEventListener('install', function (event) {
       return cache.addAll([
         '/',
         '/index.html',
-        '/offline.html',
+        // '/offline.html',
         '/bundle.js',
         '/style.css',
         '/normalize.css',
