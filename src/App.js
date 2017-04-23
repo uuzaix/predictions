@@ -16,7 +16,7 @@ export class App extends React.Component {
     super(props)
     this.state = {
       view: "load",
-      showTable: true,
+      showTable: false,
       currentPrediction: {
         title: '', prob: '50', correct: 'unknown'
       },
