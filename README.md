@@ -4,7 +4,7 @@
 
 **Keep track of your predictions and calibrate yourself**
 
-This app aims to increase quality of estimations made by users. Confidence level and correctness can be set for each prediction. Provided statistics helps users to calibrate their accuracy of estimations.
+This app aims to increase quality of estimations made by users. Confidence level and correctness can be set for each prediction. Provided statistics helps users to calibrate the accuracy of their estimations.
 
 **See demo at**
 https://predictions-3205d.firebaseapp.com/
